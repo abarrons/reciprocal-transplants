@@ -36,7 +36,3 @@ Confirm that you have permission to publish and redistribute the bundled study d
 ## Run the analysis
 
 Open `RTs_analysis.Rproj` in RStudio. Render the numbered reports in order, starting with `01_data_load.Rmd`; later reports use intermediate RDS files produced by earlier steps. Render a report with `rmarkdown::render("01_data_load.Rmd")`, replacing the filename for each subsequent report. Outputs are written under the project’s `results/` and `plots/` directories.
-
-## Before publishing
-
-Review the input data, rendered report, and analysis outputs for material that should not be public, and verify that you have permission to share them. Choose and add a license if you want to grant reuse rights; no license is implied by this repository. Add a citation or `CITATION.cff` if the work should be cited.
