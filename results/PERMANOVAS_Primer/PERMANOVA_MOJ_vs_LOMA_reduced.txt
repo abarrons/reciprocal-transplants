@@ -1,0 +1,50 @@
+PERMANOVA						
+Permutational MANOVA						
+						
+Resemblance worksheet						
+Name: dm_MOJ vs LOMA						
+Data type: Dissimilarity						
+Selection: All						
+						
+Sums of squares type: Type III (partial)						
+Fixed effects sum to zero for mixed terms						
+Permutation method: Permutation of residuals under a reduced model						
+Number of permutations: 999						
+						
+Factors						
+Name	Type	Levels				
+reserve_code	Fixed	2				
+s_code	Fixed	2				
+i_code	Fixed	2				
+						
+Excluded terms						
+s_code						
+i_code						
+reserve_codexs_code						
+s_codexi_code						
+reserve_codexs_codexi_code						
+						
+PERMANOVA table of results						
+	  	       	         	        	       	Unique
+Source	df	     SS	       MS	Pseudo-F	P(perm)	 perms
+reserve_code	1	0.17453	0.17453	4.5113	0.002	998
+reserve_codexi_code	1	0.15992	0.15992	4.1336	0.001	998
+Res	24	0.9285	3.87E-02	        	       	      
+Total	26	1.3026	         	        	       	      
+						
+Details of the expected mean squares (EMS) for the model						
+Source	EMS					
+reserve_code	1*V(Res) + 13.091*S(reserve_code)					
+reserve_codexi_code	1*V(Res) + 6.5778*S(reserve_codexi_code)					
+Res	1*V(Res)					
+						
+Construction of Pseudo-F ratio(s) from mean squares						
+Source	Numerator	Denominator	Num.df	Den.df		
+reserve_code	1*reserve_code	1*Res	1	24		
+reserve_codexi_code	1*reserve_codexi_code	1*Res	1	24		
+						
+Estimates of components of variation						
+Source	 Estimate	Sq.root				
+S(reserve_code)	1.04E-02	0.10187	23.46%			
+S(reserve_codexi_code)	1.84E-02	0.13576	31.26%			
+V(Res)	3.87E-02	0.19669	45.29%			

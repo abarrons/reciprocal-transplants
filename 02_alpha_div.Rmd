@@ -1,0 +1,236 @@
+---
+title: "RT Analysis — 02: Alpha Diversity"
+author: "Alberto Barron"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      fig.align = "center", fig.width = 14, fig.height = 7)
+options(scipen = 999, digits = 12)
+```
+
+```{r libraries}
+library(tidyverse)
+library(phyloseq)
+library(ggh4x)
+library(lmerTest)
+library(car)
+library(here)
+
+source(here("R/utils.R"))
+```
+
+## Load data from 01_data_load
+
+```{r load-rds}
+rtB4rar              <- readRDS(file.path(RDS_DIR, "rtB4rar.rds"))
+rt_g                 <- readRDS(file.path(RDS_DIR, "rt_g.rds"))
+curto_unrar_otutab   <- readRDS(file.path(RDS_DIR, "curto_unrar_otutab.rds"))
+genus_unrar_otutab   <- readRDS(file.path(RDS_DIR, "genus_unrar_otutab.rds"))
+genus_min_sample     <- readRDS(file.path(RDS_DIR, "genus_min_sample.rds"))
+metadata             <- readRDS(file.path(RDS_DIR, "metadata.rds"))
+```
+
+## Curtobacterium alpha diversity
+
+```{r curto-alpha-compute}
+alpha_diversity_table <- calc_alpha_diversity(
+  otu_table      = curto_unrar_otutab,
+  n_iterations   = N_ITER,
+  sequence_depth = RAREFY_DEPTH_CURTO,
+  set_seed       = SEED
+)
+
+curto_divdf <- cbind(alpha_diversity_table, rtB4rar@sam_data)
+
+cat("Mean richness:", mean(curto_divdf$Richness), "\n")
+cat("SD richness:",  sd(curto_divdf$Richness),    "\n")
+cat("SE richness:",  sd(curto_divdf$Richness) / sqrt(nrow(curto_divdf)), "\n")
+```
+
+### Shannon diversity — away reserves
+
+```{r curto-shannon-away, fig.width=28, fig.height=10}
+ggplot(curto_divdf |> filter(reserve_code != "LOMA"),
+       aes(x = Substrate_reserve, y = Shannon, fill = i_code)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge()) +
+  facet_nested(~ reserve_code + Bag_type + s_home, scale = "free", space = "free_x") +
+  scale_fill_manual(values = inoc_colors, name = "Inoculum") +
+  xlab("Litter substrate") +
+  ggtitle("Curtobacterium alpha diversity — away reserves") +
+  apatheme +
+  theme(axis.text.x = element_blank(),
+        panel.spacing = unit(0, "line"),
+        panel.border = element_rect(color = "gray", fill = NA, linewidth = 0.1),
+        legend.position = "bottom")
+```
+
+### Shannon diversity — Loma Ridge
+
+```{r curto-shannon-loma, fig.width=16, fig.height=7}
+ggplot(curto_divdf |> filter(reserve_code == "LOMA"),
+       aes(x = Substrate_reserve, y = Shannon, fill = i_code)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge()) +
+  facet_nested(~ reserve_code + s_home + s_code, scale = "free", space = "free_x") +
+  scale_fill_manual(values = inoc_colors, name = "Inoculum") +
+  xlab("Litter substrate") +
+  ggtitle("Curtobacterium alpha diversity — Loma Ridge") +
+  apatheme +
+  theme(axis.text.x = element_blank(),
+        panel.spacing = unit(0, "line"),
+        panel.border = element_rect(color = "gray", fill = NA, linewidth = 0.1),
+        legend.position = "bottom")
+```
+
+### Shannon by bag type
+
+```{r curto-shannon-bagtype, fig.width=28, fig.height=7}
+ggplot(curto_divdf,
+       aes(x = Bag_type, y = Shannon, fill = i_code)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge()) +
+  facet_nested(~ reserve_code + Bag_type, scale = "free", space = "free_x") +
+  scale_fill_manual(values = inoc_colors, name = "Inoculum") +
+  xlab("Bag type") +
+  ggtitle("Curtobacterium alpha diversity by bag type") +
+  apatheme +
+  theme(axis.text.x = element_blank(),
+        panel.spacing = unit(0, "line"),
+        panel.border = element_rect(color = "gray", fill = NA, linewidth = 0.1),
+        legend.position = "bottom")
+```
+
+### Normality check
+
+```{r curto-normality}
+hist(curto_divdf$Shannon, main = "Shannon distribution — Curtobacterium", xlab = "Shannon")
+```
+
+### Statistical tests — Curtobacterium
+
+**Note:** Before accepting the ANOVA results, check residuals for normality and
+homoscedasticity. The LMM (m1) is preferred here as it accounts for the random
+effect of reserve.
+
+```{r curto-anova}
+# Type II ANOVA on closed bags only
+shann_anova <- car::Anova(
+  aov(Shannon ~ reserve_code * s_home + i_home,
+      data = curto_divdf |> filter(Bag_type != "Open")),
+  type = "II"
+)
+shann_anova
+
+# Residual checks
+aov_mod <- aov(Shannon ~ reserve_code * s_home + i_home,
+               data = curto_divdf |> filter(Bag_type != "Open"))
+par(mfrow = c(1, 2))
+plot(aov_mod, which = 1:2)
+par(mfrow = c(1, 1))
+```
+
+```{r curto-lmm}
+# Mixed model: reserve as random effect
+m1 <- lmer(Shannon ~ s_home + i_home + (1 | reserve_code),
+           data = curto_divdf |> filter(Bag_type != "Open"))
+anova(m1)
+summary(m1)
+```
+
+---
+
+## Bacterial genus-level alpha diversity
+
+```{r genus-alpha-compute}
+# Bug fix: use genus_unrar_otutab (not curto_unrar_otutab) for genus-level diversity
+alpha_diversity_table_g <- calc_alpha_diversity(
+  otu_table      = genus_unrar_otutab,
+  n_iterations   = N_ITER,
+  sequence_depth = genus_min_sample,
+  set_seed       = SEED
+)
+
+genus_divdf <- cbind(alpha_diversity_table_g, rt_g@sam_data)
+
+cat("Mean genus richness:", mean(genus_divdf$Richness), "\n")
+cat("SD genus richness:",  sd(genus_divdf$Richness),    "\n")
+cat("SE genus richness:",  sd(genus_divdf$Richness) / sqrt(nrow(genus_divdf)), "\n")
+```
+
+### Shannon diversity — away reserves (genus)
+
+```{r genus-shannon-away, fig.width=28, fig.height=10}
+ggplot(genus_divdf |> filter(reserve_code != "LOMA"),
+       aes(x = Substrate_reserve, y = Shannon, fill = i_code)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge()) +
+  facet_nested(~ reserve_code + Bag_type + s_home, scale = "free", space = "free_x") +
+  scale_fill_manual(values = inoc_colors, name = "Inoculum") +
+  xlab("Litter substrate") +
+  ggtitle("Bacterial genera alpha diversity — away reserves") +
+  apatheme +
+  theme(axis.text.x = element_blank(),
+        panel.spacing = unit(0, "line"),
+        panel.border = element_rect(color = "gray", fill = NA, linewidth = 0.1),
+        legend.position = "bottom")
+```
+
+### Shannon diversity — Loma Ridge (genus)
+
+```{r genus-shannon-loma, fig.width=16, fig.height=7}
+ggplot(genus_divdf |> filter(reserve_code == "LOMA"),
+       aes(x = Substrate_reserve, y = Shannon, fill = i_code)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge()) +
+  facet_nested(~ reserve_code + s_home + s_code, scale = "free", space = "free_x") +
+  scale_fill_manual(values = inoc_colors, name = "Inoculum") +
+  xlab("Litter substrate") +
+  ggtitle("Bacterial genera alpha diversity — Loma Ridge") +
+  apatheme +
+  theme(axis.text.x = element_blank(),
+        panel.spacing = unit(0, "line"),
+        panel.border = element_rect(color = "gray", fill = NA, linewidth = 0.1),
+        legend.position = "bottom")
+```
+
+### Statistical tests — genus level
+
+```{r genus-anova}
+shann_anova_genus <- car::Anova(
+  aov(Shannon ~ reserve_code * s_home + i_home,
+      data = genus_divdf |> filter(Bag_type != "Open")),
+  type = "II"
+)
+shann_anova_genus
+
+aov_mod_g <- aov(Shannon ~ reserve_code * s_home + i_home,
+                 data = genus_divdf |> filter(Bag_type != "Open"))
+par(mfrow = c(1, 2))
+plot(aov_mod_g, which = 1:2)
+par(mfrow = c(1, 1))
+```
+
+```{r genus-lmm}
+m2 <- lmer(Shannon ~ s_home + i_home + (1 | reserve_code),
+           data = genus_divdf |> filter(Bag_type != "Open"))
+anova(m2)
+summary(m2)
+```
+
+## Save outputs
+
+```{r save-rds}
+saveRDS(curto_divdf,            file.path(RDS_DIR, "curto_divdf.rds"))
+saveRDS(genus_divdf,            file.path(RDS_DIR, "genus_divdf.rds"))
+saveRDS(alpha_diversity_table,  file.path(RDS_DIR, "alpha_diversity_table.rds"))
+saveRDS(alpha_diversity_table_g,file.path(RDS_DIR, "alpha_diversity_table_g.rds"))
+
+message("02_alpha_div: all objects saved to ", RDS_DIR)
+```

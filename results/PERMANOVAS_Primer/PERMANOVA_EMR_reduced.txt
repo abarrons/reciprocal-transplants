@@ -1,0 +1,45 @@
+PERMANOVA						
+Permutational MANOVA						
+						
+Resemblance worksheet						
+Name: dm_EMR						
+Data type: Distance						
+Selection: All						
+						
+Sums of squares type: Type III (partial)						
+Fixed effects sum to zero for mixed terms						
+Permutation method: Permutation of residuals under a reduced model						
+Number of permutations: 999						
+						
+Factors						
+Name	Type	Levels				
+s_code	Fixed	2				
+i_code	Fixed	2				
+						
+Excluded terms						
+s_codexi_code						
+						
+PERMANOVA table of results						
+	  	         	         	        	       	Unique
+Source	df	       SS	       MS	Pseudo-F	P(perm)	 perms
+s_code	1	0.20199	0.20199	10.773	0.001	999
+i_code	1	5.71E-02	5.71E-02	3.0431	0.003	998
+Res	13	0.24375	1.88E-02	        	       	      
+Total	15	0.5028	         	        	       	      
+						
+Details of the expected mean squares (EMS) for the model						
+Source	EMS					
+s_code	1*V(Res) + 8*S(s_code)					
+i_code	1*V(Res) + 8*S(i_code)					
+Res	1*V(Res)					
+						
+Construction of Pseudo-F ratio(s) from mean squares						
+Source	Numerator	Denominator	Num.df	Den.df		
+s_code	1*s_code	1*Res	1	13		
+i_code	1*i_code	1*Res	1	13		
+						
+Estimates of components of variation						
+Source	 Estimate	Sq.root				
+S(s_code)	2.29E-02	0.15135	42.34%			
+S(i_code)	4.79E-03	6.92E-02	19.36%			
+V(Res)	1.88E-02	0.13693	38.30%			

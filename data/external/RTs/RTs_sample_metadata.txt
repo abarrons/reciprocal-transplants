@@ -1,0 +1,333 @@
+original_label	Site	Substrate_litter	Inoculum	Bag_type	Reserve	Reserve_number	Substrate_reserve	Inoculum_reserve	Litter_type	Litter_species	Reserve_ecosystem
+L23S00I00-1	L23	S00	I00	Closed	Emerson Oaks	23	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L23S00I00-2	L23	S00	I00	Closed	Emerson Oaks	23	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L23S00I00-3	L23	S00	I00	Closed	Emerson Oaks	23	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L23S00I00-4	L23	S00	I00	Closed	Emerson Oaks	23	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L23S23I00-1	L23	S23	I00	Closed	Emerson Oaks	23	Emerson Oaks	Loma Ridge	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I00-2	L23	S23	I00	Closed	Emerson Oaks	23	Emerson Oaks	Loma Ridge	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I00-3	L23	S23	I00	Closed	Emerson Oaks	23	Emerson Oaks	Loma Ridge	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I00-4	L23	S23	I00	Closed	Emerson Oaks	23	Emerson Oaks	Loma Ridge	Shrub	Quercus berberidifolia	Oak Woodland
+L23S00I23-1	L23	S00	I23	Closed	Emerson Oaks	23	Loma Ridge	Emerson Oaks	Grass	Avena barbata	Oak Woodland
+L23S00I23-2	L23	S00	I23	Closed	Emerson Oaks	23	Loma Ridge	Emerson Oaks	Grass	Avena barbata	Oak Woodland
+L23S00I23-3	L23	S00	I23	Closed	Emerson Oaks	23	Loma Ridge	Emerson Oaks	Grass	Avena barbata	Oak Woodland
+L23S00I23-4	L23	S00	I23	Closed	Emerson Oaks	23	Loma Ridge	Emerson Oaks	Grass	Avena barbata	Oak Woodland
+L23S23I23-1	L23	S23	I23	Closed	Emerson Oaks	23	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I23-2	L23	S23	I23	Closed	Emerson Oaks	23	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I23-3	L23	S23	I23	Closed	Emerson Oaks	23	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Oak Woodland
+L23S23I23-4	L23	S23	I23	Closed	Emerson Oaks	23	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Oak Woodland
+L23S00IX-1	L23	S00	IX	Closed	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L23S00IX-2	L23	S00	IX	Closed	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L23S00IX-3	L23	S00	IX	Closed	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L23S00IX-4	L23	S00	IX	Closed	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L23S00IX-1	L23	S00	IX	Open	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L23S00IX-2	L23	S00	IX	Open	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L23S00IX-3	L23	S00	IX	Open	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L23S00IX-4	L23	S00	IX	Open	Emerson Oaks	23	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L23S23IX-1	L23	S23	IX	Open	Emerson Oaks	23	Emerson Oaks	none	Shrub	Quercus berberidifolia	Oak Woodland
+O-L23S23IX-2	L23	S23	IX	Open	Emerson Oaks	23	Emerson Oaks	none	Shrub	Quercus berberidifolia	Oak Woodland
+O-L23S23IX-3	L23	S23	IX	Open	Emerson Oaks	23	Emerson Oaks	none	Shrub	Quercus berberidifolia	Oak Woodland
+O-L23S23IX-4	L23	S23	IX	Open	Emerson Oaks	23	Emerson Oaks	none	Shrub	Quercus berberidifolia	Oak Woodland
+L26S00I00-1	L26	S00	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L26S00I00-2	L26	S00	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L26S00I00-3	L26	S00	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L26S00I00-4	L26	S00	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L26S26I00-1	L26	S26	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Shrub	Larrea tridentata	Desert
+L26S26I00-2	L26	S26	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Shrub	Larrea tridentata	Desert
+L26S26I00-3	L26	S26	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Shrub	Larrea tridentata	Desert
+L26S26I00-4	L26	S26	I00	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Shrub	Larrea tridentata	Desert
+L26S00I26-1	L26	S00	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Sweeney Granite Mountains Desert Research Center	Grass	Avena barbata	Desert
+L26S00I26-2	L26	S00	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Sweeney Granite Mountains Desert Research Center	Grass	Avena barbata	Desert
+L26S00I26-3	L26	S00	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Sweeney Granite Mountains Desert Research Center	Grass	Avena barbata	Desert
+L26S00I26-4	L26	S00	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	Sweeney Granite Mountains Desert Research Center	Grass	Avena barbata	Desert
+L26S26I26-1	L26	S26	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Desert
+L26S26I26-2	L26	S26	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Desert
+L26S26I26-3	L26	S26	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Desert
+L26S26I26-4	L26	S26	I26	Closed	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Desert
+L26S00IX-1	L26	S00	IX	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+L26S00IX-2	L26	S00	IX	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+L26S00IX-3	L26	S00	IX	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+L26S00IX-4	L26	S00	IX	Closed	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L26S00IX-1	L26	S00	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L26S00IX-2	L26	S00	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L26S00IX-3	L26	S00	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L26S00IX-4	L26	S00	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L26S26IX-1	L26	S26	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Desert
+O-L26S26IX-2	L26	S26	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Desert
+O-L26S26IX-3	L26	S26	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Desert
+O-L26S26IX-4	L26	S26	IX	Open	Sweeney Granite Mountains Desert Research Center	26	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Desert
+L32S00I00-1	L32	S00	I00	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L32S00I00-2	L32	S00	I00	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L32S00I00-3	L32	S00	I00	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L32S00I00-4	L32	S00	I00	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L32S32I00-1	L32	S32	I00	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Loma Ridge	Shrub	Artemisa californica	Coastal Marine
+L32S32I00-2	L32	S32	I00	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Loma Ridge	Shrub	Artemisa californica	Coastal Marine
+L32S32I00-3	L32	S32	I00	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Loma Ridge	Shrub	Artemisa californica	Coastal Marine
+L32S32I00-4	L32	S32	I00	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Loma Ridge	Shrub	Artemisa californica	Coastal Marine
+L32S00I32-1	L32	S00	I32	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Coal Oil Point Natural Reserve	Grass	Avena barbata	Coastal Marine
+L32S00I32-2	L32	S00	I32	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Coal Oil Point Natural Reserve	Grass	Avena barbata	Coastal Marine
+L32S00I32-3	L32	S00	I32	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Coal Oil Point Natural Reserve	Grass	Avena barbata	Coastal Marine
+L32S00I32-4	L32	S00	I32	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	Coal Oil Point Natural Reserve	Grass	Avena barbata	Coastal Marine
+L32S32I32-1	L32	S32	I32	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Coastal Marine
+L32S32I32-2	L32	S32	I32	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Coastal Marine
+L32S32I32-3	L32	S32	I32	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Coastal Marine
+L32S32I32-4	L32	S32	I32	Closed	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Coastal Marine
+L32S00IX-1	L32	S00	IX	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L32S00IX-2	L32	S00	IX	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L32S00IX-3	L32	S00	IX	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L32S00IX-4	L32	S00	IX	Closed	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L32S00IX-1	L32	S00	IX	Open	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L32S00IX-2	L32	S00	IX	Open	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L32S00IX-3	L32	S00	IX	Open	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L32S00IX-4	L32	S00	IX	Open	Coal Oil Point Natural Reserve	32	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L32S32IX-1	L32	S32	IX	Open	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Coastal Marine
+O-L32S32IX-2	L32	S32	IX	Open	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Coastal Marine
+O-L32S32IX-3	L32	S32	IX	Open	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Coastal Marine
+O-L32S32IX-4	L32	S32	IX	Open	Coal Oil Point Natural Reserve	32	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Coastal Marine
+L35S00I00-1	L35	S00	I00	Closed	Sedgwick Reserve	35	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L35S00I00-2	L35	S00	I00	Closed	Sedgwick Reserve	35	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L35S00I00-3	L35	S00	I00	Closed	Sedgwick Reserve	35	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L35S00I00-4	L35	S00	I00	Closed	Sedgwick Reserve	35	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L35S35I00-1	L35	S35	I00	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L35S35I00-2	L35	S35	I00	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L35S35I00-3	L35	S35	I00	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L35S35I00-4	L35	S35	I00	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L35S00I35-1	L35	S00	I35	Closed	Sedgwick Reserve	35	Loma Ridge	Sedgwick Reserve	Grass	Avena barbata	Oak Woodland
+L35S00I35-2	L35	S00	I35	Closed	Sedgwick Reserve	35	Loma Ridge	Sedgwick Reserve	Grass	Avena barbata	Oak Woodland
+L35S00I35-3	L35	S00	I35	Closed	Sedgwick Reserve	35	Loma Ridge	Sedgwick Reserve	Grass	Avena barbata	Oak Woodland
+L35S00I35-4	L35	S00	I35	Closed	Sedgwick Reserve	35	Loma Ridge	Sedgwick Reserve	Grass	Avena barbata	Oak Woodland
+L35S35I35-1	L35	S35	I35	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Oak Woodland
+L35S35I35-2	L35	S35	I35	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Oak Woodland
+L35S35I35-3	L35	S35	I35	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Oak Woodland
+L35S35I35-4	L35	S35	I35	Closed	Sedgwick Reserve	35	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Oak Woodland
+L35S00IX-1	L35	S00	IX	Closed	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L35S00IX-2	L35	S00	IX	Closed	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L35S00IX-3	L35	S00	IX	Closed	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L35S00IX-4	L35	S00	IX	Closed	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L35S00IX-1	L35	S00	IX	Open	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L35S00IX-2	L35	S00	IX	Open	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L35S00IX-3	L35	S00	IX	Open	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L35S00IX-4	L35	S00	IX	Open	Sedgwick Reserve	35	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L35S35IX-1	L35	S35	IX	Open	Sedgwick Reserve	35	Sedgwick Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L35S35IX-2	L35	S35	IX	Open	Sedgwick Reserve	35	Sedgwick Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L35S35IX-3	L35	S35	IX	Open	Sedgwick Reserve	35	Sedgwick Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L35S35IX-4	L35	S35	IX	Open	Sedgwick Reserve	35	Sedgwick Reserve	none	Tree	Quercus douglasii	Oak Woodland
+L02S00I00-1	L02	S00	I00	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L02S00I00-2	L02	S00	I00	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L02S00I00-3	L02	S00	I00	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L02S00I00-4	L02	S00	I00	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Loma Ridge	Grass	Avena barbata	Oak Woodland
+L02S02I00-1	L02	S02	I00	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L02S02I00-2	L02	S02	I00	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L02S02I00-3	L02	S02	I00	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L02S02I00-4	L02	S02	I00	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Loma Ridge	Tree	Quercus douglasii	Oak Woodland
+L02S00I02-1	L02	S00	I02	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Blue Oak Ranch Reserve	Grass	Avena barbata	Oak Woodland
+L02S00I02-2	L02	S00	I02	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Blue Oak Ranch Reserve	Grass	Avena barbata	Oak Woodland
+L02S00I02-3	L02	S00	I02	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Blue Oak Ranch Reserve	Grass	Avena barbata	Oak Woodland
+L02S00I02-4	L02	S00	I02	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	Blue Oak Ranch Reserve	Grass	Avena barbata	Oak Woodland
+L02S02I02-1	L02	S02	I02	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Oak Woodland
+L02S02I02-2	L02	S02	I02	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Oak Woodland
+L02S02I02-3	L02	S02	I02	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Oak Woodland
+L02S02I02-4	L02	S02	I02	Closed	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Oak Woodland
+L02S00IX-1	L02	S00	IX	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L02S00IX-2	L02	S00	IX	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L02S00IX-3	L02	S00	IX	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+L02S00IX-4	L02	S00	IX	Closed	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L02S00IX-1	L02	S00	IX	Open	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L02S00IX-2	L02	S00	IX	Open	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L02S00IX-3	L02	S00	IX	Open	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L02S00IX-4	L02	S00	IX	Open	Blue Oak Ranch Reserve	02	Loma Ridge	none	Grass	Avena barbata	Oak Woodland
+O-L02S02IX-1	L02	S02	IX	Open	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L02S02IX-2	L02	S02	IX	Open	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L02S02IX-3	L02	S02	IX	Open	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Oak Woodland
+O-L02S02IX-4	L02	S02	IX	Open	Blue Oak Ranch Reserve	02	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Oak Woodland
+L08S00I00-1	L08	S00	I00	Closed	Bodega Marine Reserve	08	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L08S00I00-2	L08	S00	I00	Closed	Bodega Marine Reserve	08	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L08S00I00-3	L08	S00	I00	Closed	Bodega Marine Reserve	08	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L08S00I00-4	L08	S00	I00	Closed	Bodega Marine Reserve	08	Loma Ridge	Loma Ridge	Grass	Avena barbata	Coastal Marine
+L08S08I00-1	L08	S08	I00	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Loma Ridge	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I00-2	L08	S08	I00	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Loma Ridge	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I00-3	L08	S08	I00	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Loma Ridge	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I00-4	L08	S08	I00	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Loma Ridge	Shrub	Lupinus chamissonis	Coastal Marine
+L08S00I08-1	L08	S00	I08	Closed	Bodega Marine Reserve	08	Loma Ridge	Bodega Marine Reserve	Grass	Avena barbata	Coastal Marine
+L08S00I08-2	L08	S00	I08	Closed	Bodega Marine Reserve	08	Loma Ridge	Bodega Marine Reserve	Grass	Avena barbata	Coastal Marine
+L08S00I08-3	L08	S00	I08	Closed	Bodega Marine Reserve	08	Loma Ridge	Bodega Marine Reserve	Grass	Avena barbata	Coastal Marine
+L08S00I08-4	L08	S00	I08	Closed	Bodega Marine Reserve	08	Loma Ridge	Bodega Marine Reserve	Grass	Avena barbata	Coastal Marine
+L08S08I08-1	L08	S08	I08	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I08-2	L08	S08	I08	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I08-3	L08	S08	I08	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Coastal Marine
+L08S08I08-4	L08	S08	I08	Closed	Bodega Marine Reserve	08	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Coastal Marine
+L08S00IX-1	L08	S00	IX	Closed	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L08S00IX-2	L08	S00	IX	Closed	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L08S00IX-3	L08	S00	IX	Closed	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+L08S00IX-4	L08	S00	IX	Closed	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L08S00IX-1	L08	S00	IX	Open	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L08S00IX-2	L08	S00	IX	Open	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L08S00IX-3	L08	S00	IX	Open	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L08S00IX-4	L08	S00	IX	Open	Bodega Marine Reserve	08	Loma Ridge	none	Grass	Avena barbata	Coastal Marine
+O-L08S08IX-1	L08	S08	IX	Open	Bodega Marine Reserve	08	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Coastal Marine
+O-L08S08IX-2	L08	S08	IX	Open	Bodega Marine Reserve	08	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Coastal Marine
+O-L08S08IX-3	L08	S08	IX	Open	Bodega Marine Reserve	08	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Coastal Marine
+O-L08S08IX-4	L08	S08	IX	Open	Bodega Marine Reserve	08	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Coastal Marine
+L11S00I00-1	L11	S00	I00	Closed	McLaughlin Natural Reserve	11	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L11S00I00-2	L11	S00	I00	Closed	McLaughlin Natural Reserve	11	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L11S00I00-3	L11	S00	I00	Closed	McLaughlin Natural Reserve	11	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L11S00I00-4	L11	S00	I00	Closed	McLaughlin Natural Reserve	11	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L11S11I00-1	L11	S11	I00	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	Loma Ridge	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I00-2	L11	S11	I00	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	Loma Ridge	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I00-3	L11	S11	I00	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	Loma Ridge	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I00-4	L11	S11	I00	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	Loma Ridge	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S00I11-1	L11	S00	I11	Closed	McLaughlin Natural Reserve	11	Loma Ridge	McLaughlin Natural Reserve	Grass	Avena barbata	Grassland
+L11S00I11-2	L11	S00	I11	Closed	McLaughlin Natural Reserve	11	Loma Ridge	McLaughlin Natural Reserve	Grass	Avena barbata	Grassland
+L11S00I11-3	L11	S00	I11	Closed	McLaughlin Natural Reserve	11	Loma Ridge	McLaughlin Natural Reserve	Grass	Avena barbata	Grassland
+L11S00I11-4	L11	S00	I11	Closed	McLaughlin Natural Reserve	11	Loma Ridge	McLaughlin Natural Reserve	Grass	Avena barbata	Grassland
+L11S11I11-1	L11	S11	I11	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I11-2	L11	S11	I11	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I11-3	L11	S11	I11	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S11I11-4	L11	S11	I11	Closed	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L11S00IX-1	L11	S00	IX	Closed	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+L11S00IX-2	L11	S00	IX	Closed	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+L11S00IX-3	L11	S00	IX	Closed	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+L11S00IX-4	L11	S00	IX	Closed	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L11S00IX-1	L11	S00	IX	Open	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L11S00IX-2	L11	S00	IX	Open	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L11S00IX-3	L11	S00	IX	Open	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L11S00IX-4	L11	S00	IX	Open	McLaughlin Natural Reserve	11	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L11S11IX-1	L11	S11	IX	Open	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L11S11IX-2	L11	S11	IX	Open	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L11S11IX-3	L11	S11	IX	Open	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L11S11IX-4	L11	S11	IX	Open	McLaughlin Natural Reserve	11	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L36S00I00-1	L36	S00	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L36S00I00-2	L36	S00	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L36S00I00-3	L36	S00	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L36S00I00-4	L36	S00	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Loma Ridge	Grass	Avena barbata	Desert
+L36S36I00-1	L36	S36	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Shrub	Artemisa tridentata	Desert
+L36S36I00-2	L36	S36	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Shrub	Artemisa tridentata	Desert
+L36S36I00-3	L36	S36	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Shrub	Artemisa tridentata	Desert
+L36S36I00-4	L36	S36	I00	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Shrub	Artemisa tridentata	Desert
+L36S00I36-1	L36	S00	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Sierra Nevada Aquatic Research Laboratory	Grass	Avena barbata	Desert
+L36S00I36-2	L36	S00	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Sierra Nevada Aquatic Research Laboratory	Grass	Avena barbata	Desert
+L36S00I36-3	L36	S00	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Sierra Nevada Aquatic Research Laboratory	Grass	Avena barbata	Desert
+L36S00I36-4	L36	S00	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	Sierra Nevada Aquatic Research Laboratory	Grass	Avena barbata	Desert
+L36S36I36-1	L36	S36	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Desert
+L36S36I36-2	L36	S36	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Desert
+L36S36I36-3	L36	S36	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Desert
+L36S36I36-4	L36	S36	I36	Closed	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Desert
+L36S00IX-1	L36	S00	IX	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+L36S00IX-2	L36	S00	IX	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+L36S00IX-3	L36	S00	IX	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+L36S00IX-4	L36	S00	IX	Closed	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L36S00IX-1	L36	S00	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L36S00IX-2	L36	S00	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L36S00IX-3	L36	S00	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L36S00IX-4	L36	S00	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Loma Ridge	none	Grass	Avena barbata	Desert
+O-L36S36IX-1	L36	S36	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Desert
+O-L36S36IX-2	L36	S36	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Desert
+O-L36S36IX-3	L36	S36	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Desert
+O-L36S36IX-4	L36	S36	IX	Open	Sierra Nevada Aquatic Research Laboratory	36	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Desert
+L00S00I00-1	L00	S00	I00	Closed	Loma Ridge	00	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L00S00I00-2	L00	S00	I00	Closed	Loma Ridge	00	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L00S00I00-3	L00	S00	I00	Closed	Loma Ridge	00	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L00S00I00-4	L00	S00	I00	Closed	Loma Ridge	00	Loma Ridge	Loma Ridge	Grass	Avena barbata	Grassland
+L00S02I00-1	L00	S02	I00	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S02I00-2	L00	S02	I00	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S02I00-3	L00	S02	I00	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S02I00-4	L00	S02	I00	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S08I00-1	L00	S08	I00	Closed	Loma Ridge	00	Bodega Marine Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S08I00-2	L00	S08	I00	Closed	Loma Ridge	00	Bodega Marine Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S08I00-3	L00	S08	I00	Closed	Loma Ridge	00	Bodega Marine Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S08I00-4	L00	S08	I00	Closed	Loma Ridge	00	Bodega Marine Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S11I00-1	L00	S11	I00	Closed	Loma Ridge	00	McLaughlin Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S11I00-2	L00	S11	I00	Closed	Loma Ridge	00	McLaughlin Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S11I00-3	L00	S11	I00	Closed	Loma Ridge	00	McLaughlin Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S11I00-4	L00	S11	I00	Closed	Loma Ridge	00	McLaughlin Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S23I00-1	L00	S23	I00	Closed	Loma Ridge	00	Emerson Oaks	Loma Ridge	Grass	Avena barbata	Grassland
+L00S23I00-2	L00	S23	I00	Closed	Loma Ridge	00	Emerson Oaks	Loma Ridge	Grass	Avena barbata	Grassland
+L00S23I00-3	L00	S23	I00	Closed	Loma Ridge	00	Emerson Oaks	Loma Ridge	Grass	Avena barbata	Grassland
+L00S23I00-4	L00	S23	I00	Closed	Loma Ridge	00	Emerson Oaks	Loma Ridge	Grass	Avena barbata	Grassland
+L00S26I00-1	L00	S26	I00	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Grass	Avena barbata	Grassland
+L00S26I00-2	L00	S26	I00	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Grass	Avena barbata	Grassland
+L00S26I00-3	L00	S26	I00	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Grass	Avena barbata	Grassland
+L00S26I00-4	L00	S26	I00	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Loma Ridge	Grass	Avena barbata	Grassland
+L00S32I00-1	L00	S32	I00	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S32I00-2	L00	S32	I00	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S32I00-3	L00	S32	I00	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S32I00-4	L00	S32	I00	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S35I00-1	L00	S35	I00	Closed	Loma Ridge	00	Sedgwick Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S35I00-2	L00	S35	I00	Closed	Loma Ridge	00	Sedgwick Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S35I00-3	L00	S35	I00	Closed	Loma Ridge	00	Sedgwick Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S35I00-4	L00	S35	I00	Closed	Loma Ridge	00	Sedgwick Reserve	Loma Ridge	Grass	Avena barbata	Grassland
+L00S36I00-1	L00	S36	I00	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Grass	Avena barbata	Grassland
+L00S36I00-2	L00	S36	I00	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Grass	Avena barbata	Grassland
+L00S36I00-3	L00	S36	I00	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Grass	Avena barbata	Grassland
+L00S36I00-4	L00	S36	I00	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Loma Ridge	Grass	Avena barbata	Grassland
+L00S02I02-1	L00	S02	I02	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Grassland
+L00S02I02-2	L00	S02	I02	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Grassland
+L00S02I02-3	L00	S02	I02	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Grassland
+L00S02I02-4	L00	S02	I02	Closed	Loma Ridge	00	Blue Oak Ranch Reserve	Blue Oak Ranch Reserve	Tree	Quercus douglasii	Grassland
+L00S08I08-1	L00	S08	I08	Closed	Loma Ridge	00	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Grassland
+L00S08I08-2	L00	S08	I08	Closed	Loma Ridge	00	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Grassland
+L00S08I08-3	L00	S08	I08	Closed	Loma Ridge	00	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Grassland
+L00S08I08-4	L00	S08	I08	Closed	Loma Ridge	00	Bodega Marine Reserve	Bodega Marine Reserve	Shrub	Lupinus chamissonis	Grassland
+L00S11I11-1	L00	S11	I11	Closed	Loma Ridge	00	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L00S11I11-2	L00	S11	I11	Closed	Loma Ridge	00	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L00S11I11-3	L00	S11	I11	Closed	Loma Ridge	00	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L00S11I11-4	L00	S11	I11	Closed	Loma Ridge	00	McLaughlin Natural Reserve	McLaughlin Natural Reserve	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+L00S23I23-1	L00	S23	I23	Closed	Loma Ridge	00	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Grassland
+L00S23I23-2	L00	S23	I23	Closed	Loma Ridge	00	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Grassland
+L00S23I23-3	L00	S23	I23	Closed	Loma Ridge	00	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Grassland
+L00S23I23-4	L00	S23	I23	Closed	Loma Ridge	00	Emerson Oaks	Emerson Oaks	Shrub	Quercus berberidifolia	Grassland
+L00S26I26-1	L00	S26	I26	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Grassland
+L00S26I26-2	L00	S26	I26	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Grassland
+L00S26I26-3	L00	S26	I26	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Grassland
+L00S26I26-4	L00	S26	I26	Closed	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	Sweeney Granite Mountains Desert Research Center	Shrub	Larrea tridentata	Grassland
+L00S32I32-1	L00	S32	I32	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Grassland
+L00S32I32-2	L00	S32	I32	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Grassland
+L00S32I32-3	L00	S32	I32	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Grassland
+L00S32I32-4	L00	S32	I32	Closed	Loma Ridge	00	Coal Oil Point Natural Reserve	Coal Oil Point Natural Reserve	Shrub	Artemisa californica	Grassland
+L00S35I35-1	L00	S35	I35	Closed	Loma Ridge	00	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Grassland
+L00S35I35-2	L00	S35	I35	Closed	Loma Ridge	00	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Grassland
+L00S35I35-3	L00	S35	I35	Closed	Loma Ridge	00	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Grassland
+L00S35I35-4	L00	S35	I35	Closed	Loma Ridge	00	Sedgwick Reserve	Sedgwick Reserve	Tree	Quercus douglasii	Grassland
+L00S36I36-1	L00	S36	I36	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Grassland
+L00S36I36-2	L00	S36	I36	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Grassland
+L00S36I36-3	L00	S36	I36	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Grassland
+L00S36I36-4	L00	S36	I36	Closed	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	Sierra Nevada Aquatic Research Laboratory	Shrub	Artemisa tridentata	Grassland
+L00S00IX-1	L00	S00	IX	Closed	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+L00S00IX-2	L00	S00	IX	Closed	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+L00S00IX-3	L00	S00	IX	Closed	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+L00S00IX-4	L00	S00	IX	Closed	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L00S00IX-1	L00	S00	IX	Open	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L00S00IX-2	L00	S00	IX	Open	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L00S00IX-3	L00	S00	IX	Open	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L00S00IX-4	L00	S00	IX	Open	Loma Ridge	00	Loma Ridge	none	Grass	Avena barbata	Grassland
+O-L00S02IX-1	L00	S02	IX	Open	Loma Ridge	00	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S02IX-2	L00	S02	IX	Open	Loma Ridge	00	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S02IX-3	L00	S02	IX	Open	Loma Ridge	00	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S02IX-4	L00	S02	IX	Open	Loma Ridge	00	Blue Oak Ranch Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S08IX-1	L00	S08	IX	Open	Loma Ridge	00	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Grassland
+O-L00S08IX-2	L00	S08	IX	Open	Loma Ridge	00	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Grassland
+O-L00S08IX-3	L00	S08	IX	Open	Loma Ridge	00	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Grassland
+O-L00S08IX-4	L00	S08	IX	Open	Loma Ridge	00	Bodega Marine Reserve	none	Shrub	Lupinus chamissonis	Grassland
+O-L00S11IX-1	L00	S11	IX	Open	Loma Ridge	00	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L00S11IX-2	L00	S11	IX	Open	Loma Ridge	00	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L00S11IX-3	L00	S11	IX	Open	Loma Ridge	00	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L00S11IX-4	L00	S11	IX	Open	Loma Ridge	00	McLaughlin Natural Reserve	none	Grass	"Stipa pulchra, Festuca microstachys"	Grassland
+O-L00S23IX-1	L00	S23	IX	Open	Loma Ridge	00	Emerson Oaks	none	Shrub	Quercus berberidifolia	Grassland
+O-L00S23IX-2	L00	S23	IX	Open	Loma Ridge	00	Emerson Oaks	none	Shrub	Quercus berberidifolia	Grassland
+O-L00S23IX-3	L00	S23	IX	Open	Loma Ridge	00	Emerson Oaks	none	Shrub	Quercus berberidifolia	Grassland
+O-L00S23IX-4	L00	S23	IX	Open	Loma Ridge	00	Emerson Oaks	none	Shrub	Quercus berberidifolia	Grassland
+O-L00S26IX-1	L00	S26	IX	Open	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Grassland
+O-L00S26IX-2	L00	S26	IX	Open	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Grassland
+O-L00S26IX-3	L00	S26	IX	Open	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Grassland
+O-L00S26IX-4	L00	S26	IX	Open	Loma Ridge	00	Sweeney Granite Mountains Desert Research Center	none	Shrub	Larrea tridentata	Grassland
+O-L00S32IX-1	L00	S32	IX	Open	Loma Ridge	00	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Grassland
+O-L00S32IX-2	L00	S32	IX	Open	Loma Ridge	00	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Grassland
+O-L00S32IX-3	L00	S32	IX	Open	Loma Ridge	00	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Grassland
+O-L00S32IX-4	L00	S32	IX	Open	Loma Ridge	00	Coal Oil Point Natural Reserve	none	Shrub	Artemisa californica	Grassland
+O-L00S35IX-1	L00	S35	IX	Open	Loma Ridge	00	Sedgwick Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S35IX-2	L00	S35	IX	Open	Loma Ridge	00	Sedgwick Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S35IX-3	L00	S35	IX	Open	Loma Ridge	00	Sedgwick Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S35IX-4	L00	S35	IX	Open	Loma Ridge	00	Sedgwick Reserve	none	Tree	Quercus douglasii	Grassland
+O-L00S36IX-1	L00	S36	IX	Open	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Grassland
+O-L00S36IX-2	L00	S36	IX	Open	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Grassland
+O-L00S36IX-3	L00	S36	IX	Open	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Grassland
+O-L00S36IX-4	L00	S36	IX	Open	Loma Ridge	00	Sierra Nevada Aquatic Research Laboratory	none	Shrub	Artemisa tridentata	Grassland

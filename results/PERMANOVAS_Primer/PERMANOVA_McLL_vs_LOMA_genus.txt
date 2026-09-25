@@ -1,0 +1,66 @@
+PERMANOVA
+Permutational MANOVA
+
+Resemblance worksheet
+Name: dm_McLL vs LOMA_genus
+Data type: Dissimilarity
+Selection: All
+
+Sums of squares type: Type III (partial)
+Fixed effects sum to zero for mixed terms
+Permutation method: Permutation of residuals under a reduced model
+Number of permutations: 999
+
+Factors
+Name	Type	Levels
+reserve_code	Fixed	     2
+s_code	Fixed	     2
+i_code	Fixed	     2
+
+PERMANOVA table of results
+	  	         	         	        	       	Unique
+Source	df	       SS	       MS	Pseudo-F	P(perm)	 perms
+reserve_code	 1	  0.12017	  0.12017	  2.0457	  0.022	   998
+s_code	 1	9.4134E-2	9.4134E-2	  1.6024	  0.074	   998
+i_code	 1	6.0979E-2	6.0979E-2	   1.038	   0.39	   999
+reserve_codexs_code	 1	5.8901E-2	5.8901E-2	  1.0026	  0.457	   996
+reserve_codexi_code	 1	7.4157E-2	7.4157E-2	  1.2623	  0.208	   999
+s_codexi_code	 1	 7.548E-2	 7.548E-2	  1.2849	  0.186	   998
+reserve_codexs_codexi_code**	 0	        0	         	 No test	       	      
+Res	19	   1.1162	5.8745E-2	        	       	      
+Total	25	   1.7117	         	        	       	      
+
+** Term has one or more empty cells
+
+Details of the expected mean squares (EMS) for the model
+Source	EMS
+reserve_code	1*V(Res) + 7.3846*S(reserve_code)
+s_code	1*V(Res) + 7.3846*S(s_code)
+i_code	1*V(Res) + 8*S(i_code)
+reserve_codexs_code	1*V(Res) + 3.6923*S(reserve_codexs_code)
+reserve_codexi_code	1*V(Res) + 3.4286*S(reserve_codexi_code)
+s_codexi_code	1*V(Res) + 3.4286*S(s_codexi_code)
+reserve_codexs_codexi_code	
+Res	1*V(Res)
+
+Construction of Pseudo-F ratio(s) from mean squares
+Source	Numerator	Denominator	Num.df	Den.df
+reserve_code	1*reserve_code	1*Res	     1	    19
+s_code	1*s_code	1*Res	     1	    19
+i_code	1*i_code	1*Res	     1	    19
+reserve_codexs_code	1*reserve_codexs_code	1*Res	     1	    19
+reserve_codexi_code	1*reserve_codexi_code	1*Res	     1	    19
+s_codexi_code	1*s_codexi_code	1*Res	     1	    19
+reserve_codexs_codexi_code			     0	     0
+
+Estimates of components of variation
+Source	 Estimate	  Sq.root
+S(reserve_code)	8.3185E-3	9.1206E-2
+S(s_code)	4.7922E-3	6.9226E-2
+S(i_code)	2.7921E-4	 1.671E-2
+S(reserve_codexs_code)	4.2141E-5	6.4916E-3
+S(reserve_codexi_code)	 4.495E-3	6.7045E-2
+S(s_codexi_code)	4.8811E-3	6.9865E-2
+S(reserve_codexs_codexi_code)	  No test	         
+V(Res)	5.8745E-2	  0.24237
+

@@ -1,0 +1,47 @@
+PERMANOVA
+Permutational MANOVA
+
+Resemblance worksheet
+Name: i_loma_dm_s_home
+Data type: Distance
+Selection: All
+
+Sums of squares type: Type III (partial)
+Fixed effects sum to zero for mixed terms
+Permutation method: Permutation of residuals under a reduced model
+Number of permutations: 999
+
+Factors
+Name	Type	Levels
+reserve_code	Fixed	     9
+s_home	Fixed	     2
+
+PERMANOVA table of results
+	  	         	         	        	       	Unique
+Source	df	       SS	       MS	Pseudo-F	P(perm)	 perms
+reserve_code	 8	  0.51007	6.3759E-2	  2.0525	  0.002	   996
+s_home	 1	5.6292E-2	5.6292E-2	  1.8121	  0.096	   998
+reserve_codexs_home	 8	  0.47145	5.8931E-2	  1.8971	  0.001	   997
+Res	79	   2.4541	3.1064E-2	        	       	      
+Total	96	   3.6749	         	        	       	      
+
+Details of the expected mean squares (EMS) for the model
+Source	EMS
+reserve_code	1*V(Res) + 8.3675*S(reserve_code)
+s_home	1*V(Res) + 36.413*S(s_home)
+reserve_codexs_home	1*V(Res) + 4.1837*S(reserve_codexs_home)
+Res	1*V(Res)
+
+Construction of Pseudo-F ratio(s) from mean squares
+Source	Numerator	Denominator	Num.df	Den.df
+reserve_code	1*reserve_code	1*Res	     8	    79
+s_home	1*s_home	1*Res	     1	    79
+reserve_codexs_home	1*reserve_codexs_home	1*Res	     8	    79
+
+Estimates of components of variation
+Source	 Estimate	  Sq.root
+S(reserve_code)	3.9073E-3	6.2509E-2
+S(s_home)	6.9282E-4	2.6321E-2
+S(reserve_codexs_home)	6.6607E-3	8.1613E-2
+V(Res)	3.1064E-2	  0.17625
+

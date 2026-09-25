@@ -1,0 +1,47 @@
+PERMANOVA						
+Permutational MANOVA						
+						
+Resemblance worksheet						
+Name: dm_McLL vs LOMA_genus						
+Data type: Dissimilarity						
+Selection: All						
+						
+Sums of squares type: Type III (partial)						
+Fixed effects sum to zero for mixed terms						
+Permutation method: Permutation of residuals under a reduced model						
+Number of permutations: 999						
+						
+Factors						
+Name	Type	Levels				
+reserve_code	Fixed	2				
+s_code	Fixed	2				
+i_code	Fixed	2				
+						
+Excluded terms						
+s_code						
+i_code						
+reserve_codexs_code						
+reserve_codexi_code						
+s_codexi_code						
+reserve_codexs_codexi_code						
+						
+PERMANOVA table of results						
+	  	       	         	        	       	Unique
+Source	df	     SS	       MS	Pseudo-F	P(perm)	 perms
+reserve_code	1	0.27063	0.27063	4.5071	0.002	998
+Res	24	1.4411	6.00E-02	        	       	      
+Total	25	1.7117	         	        	       	      
+						
+Details of the expected mean squares (EMS) for the model						
+Source	EMS					
+reserve_code	1*V(Res) + 12.923*S(reserve_code)					
+Res	1*V(Res)					
+						
+Construction of Pseudo-F ratio(s) from mean squares						
+Source	Numerator	Denominator	Num.df	Den.df		
+reserve_code	1*reserve_code	1*Res	1	24		
+						
+Estimates of components of variation						
+Source	 Estimate	Sq.root				
+S(reserve_code)	1.63E-02	0.12765	0.342509861			
+V(Res)	6.00E-02	0.24504	0.657490139			

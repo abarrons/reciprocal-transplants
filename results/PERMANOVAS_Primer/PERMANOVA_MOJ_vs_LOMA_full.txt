@@ -1,0 +1,66 @@
+PERMANOVA
+Permutational MANOVA
+
+Resemblance worksheet
+Name: dm_MOJ vs LOMA
+Data type: Dissimilarity
+Selection: All
+
+Sums of squares type: Type III (partial)
+Fixed effects sum to zero for mixed terms
+Permutation method: Permutation of residuals under a reduced model
+Number of permutations: 999
+
+Factors
+Name	Type	Levels
+reserve_code	Fixed	     2
+s_code	Fixed	     2
+i_code	Fixed	     2
+
+PERMANOVA table of results
+	  	         	         	        	       	Unique
+Source	df	       SS	       MS	Pseudo-F	P(perm)	 perms
+reserve_code	 1	  0.11087	  0.11087	  3.4573	  0.007	   998
+s_code	 1	  0.12665	  0.12665	  3.9494	  0.015	   999
+i_code	 1	7.6586E-2	7.6586E-2	  2.3882	  0.066	   999
+reserve_codexs_code	 1	9.2606E-2	9.2606E-2	  2.8878	  0.035	   999
+reserve_codexi_code	 1	  0.14435	  0.14435	  4.5012	  0.009	   999
+s_codexi_code	 1	5.7874E-2	5.7874E-2	  1.8047	  0.162	   997
+reserve_codexs_codexi_code**	 0	        0	         	 No test	       	      
+Res	20	  0.64137	3.2068E-2	        	       	      
+Total	26	   1.3026	         	        	       	      
+
+** Term has one or more empty cells
+
+Details of the expected mean squares (EMS) for the model
+Source	EMS
+reserve_code	1*V(Res) + 8*S(reserve_code)
+s_code	1*V(Res) + 8*S(s_code)
+i_code	1*V(Res) + 8*S(i_code)
+reserve_codexs_code	1*V(Res) + 3.6923*S(reserve_codexs_code)
+reserve_codexi_code	1*V(Res) + 3.6923*S(reserve_codexi_code)
+s_codexi_code	1*V(Res) + 3.6923*S(s_codexi_code)
+reserve_codexs_codexi_code	
+Res	1*V(Res)
+
+Construction of Pseudo-F ratio(s) from mean squares
+Source	Numerator	Denominator	Num.df	Den.df
+reserve_code	1*reserve_code	1*Res	     1	    20
+s_code	1*s_code	1*Res	     1	    20
+i_code	1*i_code	1*Res	     1	    20
+reserve_codexs_code	1*reserve_codexs_code	1*Res	     1	    20
+reserve_codexi_code	1*reserve_codexi_code	1*Res	     1	    20
+s_codexi_code	1*s_codexi_code	1*Res	     1	    20
+reserve_codexs_codexi_code			     0	     0
+
+Estimates of components of variation
+Source	 Estimate	  Sq.root
+S(reserve_code)	9.8502E-3	9.9248E-2
+S(s_code)	1.1823E-2	  0.10873
+S(i_code)	5.5648E-3	7.4597E-2
+S(reserve_codexs_code)	1.6396E-2	  0.12805
+S(reserve_codexi_code)	3.0409E-2	  0.17438
+S(s_codexi_code)	6.9892E-3	8.3601E-2
+S(reserve_codexs_codexi_code)	  No test	         
+V(Res)	3.2068E-2	  0.17908
+

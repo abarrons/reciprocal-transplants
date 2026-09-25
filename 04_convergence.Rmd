@@ -1,0 +1,1253 @@
+---
+title: "RT Analysis — 04: Convergence Analysis"
+author: "Alberto Barron"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      fig.align = "center", fig.width = 14, fig.height = 7)
+options(scipen = 999, digits = 12)
+```
+
+```{r libraries}
+library(tidyverse)
+library(vegan)
+library(phyloseq)
+library(purrr)
+library(dismo)
+library(ggrepel)
+library(ggh4x)
+library(here)
+library(writexl)
+
+source(here("R/utils.R"))
+```
+
+## Load data
+
+```{r load-rds}
+rtB4rar              <- readRDS(file.path(RDS_DIR, "rtB4rar.rds"))
+rt_subclades         <- readRDS(file.path(RDS_DIR, "rt_subclades.rds"))
+rt_g                 <- readRDS(file.path(RDS_DIR, "rt_g.rds"))
+rt_curto_rar         <- readRDS(file.path(RDS_DIR, "rt_curto_rar.rds"))
+mg_subclds_distmat   <- readRDS(file.path(RDS_DIR, "mg_subclds_distmat.rds"))
+mg_genus_distmat     <- readRDS(file.path(RDS_DIR, "mg_genus_distmat.rds"))
+meta_ext             <- readRDS(file.path(RDS_DIR, "meta_ext.rds"))
+meta_filt            <- readRDS(file.path(RDS_DIR, "meta_filt.rds"))
+metadata             <- readRDS(file.path(RDS_DIR, "metadata.rds"))
+membership           <- readRDS(file.path(RDS_DIR, "membership.rds"))
+pair_comp_dists      <- readRDS(file.path(RDS_DIR, "pair_comp_dists.rds"))
+others               <- readRDS(file.path(RDS_DIR, "others.rds"))
+litter_chem_agg      <- readRDS(file.path(RDS_DIR, "litter_chem_agg.rds"))
+litt_dists_toLOMA    <- readRDS(file.path(RDS_DIR, "litt_dists_toLOMA.rds"))
+subclade_colors_bp   <- readRDS(file.path(RDS_DIR, "subclade_colors_bp.rds"))
+subclds              <- readRDS(file.path(RDS_DIR, "subclds.rds"))
+```
+
+---
+
+## Climate distances
+
+```{r climate-data}
+prism_data <- read.csv(
+  file.path(CA_CURTO_ROOT, "mg", "PRISM_ppt_tmin_tmean_tmax_30yr_normal_800m_monthly_normals.csv"),
+  header = TRUE
+) |>
+  mutate(Name = as.factor(Name)) |>
+  filter(!is.na(Longitude))
+
+LOMA_prism <- read.csv(
+  file.path(CA_CURTO_ROOT, "RTs", "LOMA_PRISM_ppt_tmin_tmean_tmax_30yr_normal_800m_monthly_normals.csv"),
+  header = TRUE
+)
+prism_data <- bind_rows(prism_data, LOMA_prism)
+
+# Compute 19 bioclimatic variables per reserve using dismo::biovars()6
+bioclim_vars <- map_dfr(unique(prism_data$Name), function(nm) {
+  d <- prism_data |> filter(Name == nm, Date != "Annual")
+  bv <- biovars(d$ppt..mm., d$tmin..degrees.C., d$tmax..degrees.C.)
+  tibble(reserve_litter = nm, as.data.frame(bv))
+}) |>
+  column_to_rownames("reserve_litter")
+
+# PCA of climate; distances to LOMA in PCA space
+pca_clim  <- prcomp(bioclim_vars |> distinct(.keep_all = TRUE), center = TRUE, scale. = TRUE)
+clim_dist <- as.matrix(dist(pca_clim$x))
+
+exclude_reserves <- c("COP-G", "McLL-DV", "BOMR-G", "SNARL-G")
+
+pca_clim_df2 <- pca_clim$x |>
+  as.data.frame() |>
+  rownames_to_column("reserve") |>
+  left_join(bioclim_vars |> rownames_to_column("reserve"), by = "reserve") |>
+  filter(!reserve %in% exclude_reserves) |>
+  separate(col = "reserve", into = c("reserve", "litter"), remove = FALSE, fill = "warn") |>
+  filter(reserve %in% c(others, "LOMA")) |>
+  dplyr::select(-litter) |>
+  mutate(
+    PC1_LOMA_dist  = abs(PC1[reserve == "LOMA"] - PC1),
+    PC2_LOMA_dist  = abs(PC2[reserve == "LOMA"] - PC2),
+    MAT_LOMA_dist  = abs(bio1[reserve  == "LOMA"] - bio1),
+    MTCQ_LOMA_dist = abs(bio11[reserve == "LOMA"] - bio11),
+    MAP_LOMA_dist  = abs(bio12[reserve == "LOMA"] - bio12),
+    PC_LOMA_dist   = sqrt((PC1 - PC1[reserve == "LOMA"])^2 +
+                          (PC2 - PC2[reserve == "LOMA"])^2),
+    # Scaled Euclidean MAT + MAP distance
+    clim_LOMA_dist = sqrt(
+      ((bio1  - bio1[reserve  == "LOMA"]) / sd(bio1))^2 +
+      ((bio12 - bio12[reserve == "LOMA"]) / sd(bio12))^2
+    )
+  ) |>
+  filter(reserve != "LOMA")
+
+# Full Euclidean climate distance to LOMA
+clim_dist_toLOMA <- clim_dist |>
+  as.data.frame() |>
+  rownames_to_column("reserve") |>
+  filter(!reserve %in% exclude_reserves) |>
+  separate(col = "reserve", into = c("reserve", "litter"), remove = FALSE, fill = "warn") |>
+  filter(reserve %in% c(others, "LOMA")) |>
+  dplyr::select(-litter) |>
+  column_to_rownames("reserve") |>
+  t() |> as.data.frame() |>
+  rownames_to_column("reserve") |>
+  filter(!reserve %in% exclude_reserves) |>
+  separate(col = "reserve", into = c("reserve", "litter"), remove = FALSE, fill = "warn") |>
+  filter(reserve %in% c(others, "LOMA")) |>
+  dplyr::select(-litter) |>
+  filter(reserve != "LOMA") |>
+  dplyr::select(reserve, LOMA)
+
+pca_clim_df2 <- pca_clim_df2 |>
+  left_join(clim_dist_toLOMA, by = "reserve") |>
+  rename(clim_dist_to_LOMA = LOMA) |>
+  mutate(pair = paste(reserve, "vs", "LOMA"))
+
+detach("package:dismo",  unload = TRUE)
+detach("package:raster", unload = TRUE)
+detach("package:sp",     unload = TRUE)
+```
+
+```{r site-bioclim-table}
+# 9-site summary: reserve_code, lat/lon, and 19 bioclim variables.
+# Lat/lon and bioclim values are averaged across the two litter types (G, DV)
+# for each reserve. LOMA has a single entry and is included as-is.
+experiment_reserves <- c(others, "LOMA")
+
+coords <- prism_data |>
+  select(Name, Latitude, Longitude) |>
+  distinct() |>
+  mutate(reserve_code = str_remove(as.character(Name), "-(G|DV)$")) |>
+  filter(reserve_code %in% experiment_reserves) |>
+  group_by(reserve_code) |>
+  summarise(Latitude  = round(mean(Latitude),  4),
+            Longitude = round(mean(Longitude), 4),
+            .groups   = "drop")
+
+bioclim_table <- bioclim_vars |>
+  rownames_to_column("Name") |>
+  mutate(reserve_code = str_remove(Name, "-(G|DV)$")) |>
+  filter(reserve_code %in% experiment_reserves) |>
+  group_by(reserve_code) |>
+  summarise(across(starts_with("bio"), \(x) round(mean(x), 2)), .groups = "drop")
+
+bioclim_names <- c(
+  bio1  = "Annual Mean Temperature (°C)",
+  bio2  = "Mean Diurnal Range (°C)",
+  bio3  = "Isothermality",
+  bio4  = "Temperature Seasonality",
+  bio5  = "Max Temperature Warmest Month (°C)",
+  bio6  = "Min Temperature Coldest Month (°C)",
+  bio7  = "Temperature Annual Range (°C)",
+  bio8  = "Mean Temperature Wettest Quarter (°C)",
+  bio9  = "Mean Temperature Driest Quarter (°C)",
+  bio10 = "Mean Temperature Warmest Quarter (°C)",
+  bio11 = "Mean Temperature Coldest Quarter (°C)",
+  bio12 = "Annual Precipitation (mm)",
+  bio13 = "Precipitation Wettest Month (mm)",
+  bio14 = "Precipitation Driest Month (mm)",
+  bio15 = "Precipitation Seasonality (CV)",
+  bio16 = "Precipitation Wettest Quarter (mm)",
+  bio17 = "Precipitation Driest Quarter (mm)",
+  bio18 = "Precipitation Warmest Quarter (mm)",
+  bio19 = "Precipitation Coldest Quarter (mm)"
+)
+
+site_summary <- coords |>
+  left_join(bioclim_table, by = "reserve_code") |>
+  arrange(reserve_code) |>
+  rename_with(~ bioclim_names[.x], .cols = starts_with("bio"))
+
+print(site_summary)
+
+write_xlsx(
+  list("site_summary" = site_summary),
+  path = file.path(RESULTS_DIR, "tables", "site_bioclim_summary.xlsx")
+)
+```
+
+---
+
+## Centroid-based community distances
+
+```{r centroid-pipeline}
+group_cols <- c("reserve_code", "s_code", "i_code", "Bag_type")
+
+res_centroid <- centroid_dm_rarefy(
+  comm       = as.data.frame(t(rtB4rar@otu_table)),
+  meta       = metadata,
+  group_cols = group_cols,
+  depth      = RAREFY_DEPTH_SUBCL2,
+  iterations = N_ITER,
+  seed       = SEED
+)
+
+comp_vs_loma <- extract_loma_pairs(res_centroid, group_cols = group_cols)
+```
+
+```{r pair-block-dists}
+ids_all <- meta_filt$original_label
+D_full  <- as.matrix(mg_subclds_distmat)[ids_all, ids_all, drop = FALSE]
+
+pairs_vec <- meta_filt$pair |> unique() |> sort()
+pairs_vec <- pairs_vec[grepl(" vs LOMA$", pairs_vec) & !grepl("^LOMA vs LOMA$", pairs_vec)]
+loma_home_idx <- which(meta_filt$reserve_code == "LOMA" &
+                       meta_filt$s_code        == "LOMA" &
+                       meta_filt$i_code        == "LOMA")
+
+pair_dists <- map_dfr(pairs_vec, function(p) {
+  rows     <- union(which(meta_filt$pair == p), loma_home_idx)
+  Dp       <- D_full[rows, rows, drop = FALSE]
+  grp      <- meta_filt$reserve_code[rows]
+  away_res <- str_split(p, " ", simplify = TRUE)[, 1]
+  keep     <- grp %in% c("LOMA", away_res)
+  Dp       <- Dp[keep, keep, drop = FALSE]
+  grp      <- factor(grp[keep], levels = c("LOMA", away_res))
+  if (nlevels(grp) != 2 || nrow(Dp) < 2) return(tibble())
+  res <- avg_block_dists_plus(Dp, grp)
+  tibble(
+    pair              = p,
+    away_res          = away_res,
+    n_LOMA            = res$n["LOMA"],
+    n_away            = res$n[away_res],
+    mean_between      = res$between["LOMA", away_res],
+    mean_within_LOMA  = res$between["LOMA", "LOMA"],
+    mean_within_away  = res$between[away_res, away_res],
+    pairs_between     = res$pairs_between["LOMA", away_res],
+    pairs_within_LOMA = res$pairs_within["LOMA"],
+    pairs_within_away = res$pairs_within[away_res]
+  )
+}) |>
+  left_join(pca_clim_df2 |> select(reserve, PC1, PC2, PC1_LOMA_dist, PC2_LOMA_dist,
+                                    clim_dist_to_LOMA),
+            by = c("away_res" = "reserve")) |>
+  left_join(clim_dist_toLOMA |> rename(euc_clim = LOMA),
+            by = c("away_res" = "reserve"))
+```
+
+## Community vs climate distance correlation
+
+```{r comm-clim-corr}
+df_corr <- pair_dists |>
+  distinct(away_res, .keep_all = TRUE) |>
+  drop_na(mean_between, euc_clim)
+
+ct_pear  <- cor.test(df_corr$euc_clim, df_corr$mean_between, method = "pearson")
+ct_spear <- cor.test(df_corr$euc_clim, df_corr$mean_between, method = "spearman", exact = FALSE)
+m_lm     <- lm(mean_between ~ euc_clim, data = df_corr)
+R2       <- summary(m_lm)$r.squared
+
+# ⚠️ n = 8 pairs — interpret with caution; small-sample correlation is unstable.
+ann_lab <- sprintf(
+  "Pearson r = %.2f (p = %.3f)\nSpearman ρ = %.2f (p = %.3f)\nR² = %.2f\nn = %d",
+  ct_pear$estimate,  ct_pear$p.value,
+  ct_spear$estimate, ct_spear$p.value,
+  R2, nrow(df_corr)
+)
+
+ggplot(df_corr, aes(x = euc_clim, y = mean_between, label = away_res)) +
+  geom_point(size = 3) +
+  geom_text_repel(size = 3, min.segment.length = 0) +
+  geom_smooth(method = "lm", se = TRUE) +
+  annotate("text", x = -Inf, y = Inf, hjust = 0, vjust = 1,
+           label = ann_lab, size = 3.5) +
+  labs(title = "Community dissimilarity vs. climate distance to LOMA",
+       x     = "Climate distance to LOMA (Euclidean in bioclim PCA space)",
+       y     = "Community dissimilarity to LOMA (Bray–Curtis, centroids)") +
+  theme_minimal()
+
+ggsave(file.path(RESULTS_DIR, "plots", "comm_clim_dist_corr.png"),
+       width = 132, height = 120, units = "mm", dpi = 300)
+```
+
+---
+
+## Convergence paths — Curtobacterium subclades (Bray–Curtis)
+
+```{r check-paths}
+lookup  <- build_pair_lookup(meta_ext)
+missing <- check_paths(lookup, paths)
+if (nrow(missing) > 0) {
+  warning("Missing (pair, label) combinations:\n")
+  print(missing)
+}
+```
+
+```{r paths-bc}
+paths_df <- compute_all_paths(as.matrix(mg_subclds_distmat), meta_ext, zero_R_within = FALSE)
+```
+
+## Convergence paths — Curtobacterium subclades (Euclidean, top 4 subclades)
+
+```{r paths-euc}
+rt_TopSubclades <- subset_taxa(rt_subclades, subclade %in% c("IC", "IIG", "IIIA", "IVB"))
+curto_Top4_otutab <- as.data.frame(t(rt_TopSubclades@otu_table))
+cat("Min library size (top 4 subclades):", min(sample_sums(rt_TopSubclades)), "\n")
+
+avg_euc <- calc_rarefaction_euclidean(
+  otu_table      = curto_Top4_otutab,
+  n_iterations   = N_ITER,
+  sequence_depth = RAREFY_DEPTH_TOP4,
+  set_seed       = SEED
+)
+
+paths_df_euc <- compute_all_paths(as.matrix(avg_euc), meta_ext, zero_R_within = FALSE)
+```
+
+## Convergence paths — Bacterial genera (Bray–Curtis and Euclidean)
+
+```{r paths-genus}
+paths_df_genus <- compute_all_paths(as.matrix(mg_genus_distmat), meta_ext, zero_R_within = FALSE)
+
+top400_genera  <- names(sort(taxa_sums(rt_g), decreasing = TRUE)[1:400])
+rt_g_top400    <- prune_taxa(top400_genera, rt_g)
+cat("Min library size (top 400 genera):", min(sample_sums(rt_g_top400)), "\n")
+
+genus_avg_euc  <- calc_rarefaction_euclidean(
+  otu_table      = as.data.frame(t(rt_g_top400@otu_table)),
+  n_iterations   = N_ITER,
+  sequence_depth = min(sample_sums(rt_g_top400)),
+  set_seed       = SEED
+)
+paths_df_genus_euc <- compute_all_paths(as.matrix(genus_avg_euc), meta_ext, zero_R_within = FALSE)
+```
+
+---
+
+## Convergence plots
+
+```{r convergence-plot-by-site}
+convergence_by_pair_subclades <- paths_df_euc |>
+  mutate(path = factor(path, levels = names(path_colors))) |>
+  ggplot(aes(x = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_col(aes(y = F_s1_R0, fill = path), width = 0.7, alpha = 0.7) +
+  facet_wrap(~ pair, ncol = 4) +
+  scale_fill_manual(values = path_colors,
+                    labels = c("Climate (Loma)", "Litter (Loma)", "Climate & litter (Loma)",
+                                "Climate (away)", "Litter (away)")) +
+  labs(x = NULL, y = "Convergence (S)") +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.4, size = 0, linetype = 1))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "inside",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.4, "cm"),
+        legend.text            = element_text(size = 8),
+        legend.title           = element_blank())
+
+print(convergence_by_pair_subclades)
+
+ggsave(file.path(RESULTS_DIR, "plots", "Convergence_R_plot_by_site.png"),
+       width = 216, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+
+```{r convergence-r0-summary}
+
+convergence_subclades_plot <- paths_df_euc |>
+  mutate(path = factor(path, levels = names(path_colors))) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c("S climate", "S litter", "S climate & litter",
+                               "Sa climate", "Sa litter")) +
+  scale_color_manual(values = path_colors,
+                     labels = c("Climate (Loma)", "Litter (Loma)", "Climate & litter (Loma)",
+                                "Climate (away)", "Litter (away)")) +
+  scale_fill_manual(values = path_colors) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = NULL, colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "inside",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.25, "cm"),
+        legend.text            = element_text(size = 6.5),
+        legend.spacing.y       = unit(0.05, "cm"),
+        legend.margin          = margin(3, 4, 3, 4),
+        legend.title           = element_blank())
+
+print(convergence_subclades_plot)
+
+ggsave(file.path(RESULTS_DIR, "plots", "Convergence_R0_plot.png"),
+       width = 120, height = 120, units = "mm", dpi = 300, bg = "white")
+
+
+convergence_subclades_plot_loma <- paths_df_euc |>
+  filter(path  %in% c("LOMA_clim_eff", "LOMA_litt_eff", "LOMA_int_eff")) |> 
+  mutate(path = factor(path, levels = names(path_colors)[1:3])) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c("S climate", "S litter", "S climate & litter"#,
+                               #"Sa climate", "Sa litter"
+                              )) +
+  scale_color_manual(values = path_colors[1:3],
+                     labels = c("Climate", "Litter", "Climate & litter")) +
+  scale_fill_manual(values = path_colors[1:3]) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = NULL, colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "inside",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.25, "cm"),
+        legend.text            = element_text(size = 6.5),
+        legend.spacing.y       = unit(0.05, "cm"),
+        legend.margin          = margin(3, 4, 3, 4),
+        legend.title           = element_blank())
+
+print(convergence_subclades_plot_loma)
+
+
+convergence_subclades_plot_away <- paths_df_euc |>
+  filter(!path  %in% c("LOMA_clim_eff", "LOMA_litt_eff", "LOMA_int_eff")) |> 
+  mutate(path = factor(path, levels = names(path_colors)[4:5])) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c(#"S climate", "S litter", "S climate & litter"#,
+                               "Sa climate", "Sa litter"
+                              )) +
+  scale_color_manual(values = path_colors[4:5],
+                     labels = c("Climate", "Litter")) +
+  scale_fill_manual(values = path_colors[4:5]) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = NULL, colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "inside",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.25, "cm"),
+        legend.text            = element_text(size = 6.5),
+        legend.spacing.y       = unit(0.05, "cm"),
+        legend.margin          = margin(3, 4, 3, 4),
+        legend.title           = element_blank())
+
+print(convergence_subclades_plot_away)
+
+
+```
+
+
+```{r convergence-with-steps}
+# LOMA paths — stepwise convergence components
+p_dat_LOMA <- paths_df_euc |>
+  filter(!path %in% c("away_clim_eff", "away_litt_eff")) |>
+  mutate(path = factor(str_remove(path, "LOMA_"),
+                       levels = c("clim_eff", "litt_eff", "int_eff"),
+                       labels = c("Climate", "Litter", "Interaction"))) |>
+  select(pair, path, delta1_R0, delta2_R0, total_delta_R0, eta1_R0, eta2_R0) |>
+  pivot_longer(cols = c(delta1_R0, delta2_R0, total_delta_R0, eta1_R0, eta2_R0),
+               names_to = "metric", values_to = "value") |>
+  mutate(metric = factor(metric,
+                         levels = c("delta1_R0", "delta2_R0", "total_delta_R0", "eta1_R0", "eta2_R0"),
+                         labels = c("S0→S1", "S1→R", "S0→R", "Eff.S0→S1", "Eff.S1→R")))
+
+ggplot(p_dat_LOMA, aes(x = path, y = value, fill = metric)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65) +
+  facet_nested_wrap(~ pair + path, scales = "free_x", ncol = 12) +
+  labs(y = "Convergence toward R0 (Δ Euclidean)") +
+  scale_fill_manual(values = c("#8888ff", "#88cc88", "#222222", "#009ACD", "#2E8B57")) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank())
+
+ggsave(file.path(RESULTS_DIR, "plots", "ConvergenceR0_with_steps_plot.png"),
+       width = 216, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+```{r mean-pairwise-within-steps}
+step_long <- paths_df |>
+  dplyr::select(pair, path, S0, S1, R) |>
+  distinct() |>
+  pivot_longer(cols = c(S0, S1, R), names_to = "step", values_to = "label") |>
+  mutate(step_index = dplyr::recode(step, S0 = 0L, S1 = 1L, R = 2L)) |>
+  arrange(pair, path, step_index) |>
+  mutate(sample_ids = pmap(list(pair, label), ~ get_ids(lookup, ..1, ..2))) |>
+  unnest_longer(sample_ids, values_to = "sample_id") |>
+  filter(!is.na(sample_id))
+
+D_mat <- as.matrix(D_full)
+
+mpd_step <- step_long |>
+  group_by(pair, path, step_index) |>
+  summarise(n   = n_distinct(sample_id),
+            mpd = mean_within(D_mat, sample_id),
+            .groups = "drop")
+
+ggplot(mpd_step |> filter(step_index != 2),
+       aes(step_index, mpd, group = interaction(pair, path), colour = path)) +
+  geom_line(alpha = 0.5) +
+  geom_point() +
+  scale_x_continuous(breaks = 0:1, labels = c("S0", "S1")) +
+  scale_color_manual(values = path_colors) +
+  labs(x = "Step", y = "Mean pairwise Bray–Curtis (within step)") +
+  facet_wrap(~ pair, ncol = 4) +
+  theme_minimal()
+
+ggsave(file.path(RESULTS_DIR, "plots", "MeanPairwiseDistance_within_steps.png"),
+       width = 192, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+---
+
+## Convergence plots — Bacterial genera
+
+```{r convergence-genus-plot-by-site}
+convergence_by_pair_genus <- paths_df_genus_euc |>
+  mutate(path = factor(path, levels = names(path_colors))) |>
+  ggplot(aes(x = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_col(aes(y = F_s1_R0, fill = path), width = 0.7, alpha = 0.7) +
+  facet_wrap(~ pair, ncol = 4) +
+  scale_fill_manual(values = path_colors,
+                    labels = c("Climate (Loma)", "Litter (Loma)", "Climate & litter (Loma)",
+                                "Climate (away)", "Litter (away)")) +
+  labs(x = NULL, y = "Convergence (S)") +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.4, size = 0, linetype = 1))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "inside",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.4, "cm"),
+        legend.text            = element_text(size = 8),
+        legend.title           = element_blank())
+
+print(convergence_by_pair_genus)
+
+ggsave(file.path(RESULTS_DIR, "plots", "Convergence_R_plot_by_site_genus.png"),
+       width = 216, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+
+```{r convergence-genus-r0-summary}
+convergence_genus_plot <- paths_df_genus_euc |>
+  mutate(path = factor(path, levels = names(path_colors))) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c("S climate", "S litter", "S climate & litter",
+                               "Sa climate", "Sa litter")) +
+  scale_color_manual(values = path_colors,
+                     labels = c("S climate", "S litter", "S climate & litter",
+                                "Sa climate", "Sa litter")) +
+  scale_fill_manual(values = path_colors) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = "Mean convergence (S) ± SE", colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "none",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.4, "cm"),
+        legend.text            = element_text(size = 8),
+        legend.title           = element_blank())
+
+print(convergence_genus_plot)
+
+ggsave(file.path(RESULTS_DIR, "plots", "Convergence_R0_plot_genus.png"),
+       width = 120, height = 120, units = "mm", dpi = 300, bg = "white")
+
+
+convergence_genus_plot_loma <- paths_df_genus_euc |>
+  filter(path  %in% c("LOMA_clim_eff", "LOMA_litt_eff", "LOMA_int_eff")) |> 
+  mutate(path = factor(path, levels = names(path_colors)[1:3])) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c("S climate", "S litter", "S climate & litter")) +
+  scale_color_manual(values = path_colors[1:3],
+                     labels = c("Climate", "Litter", "Climate & litter")) +
+  scale_fill_manual(values = path_colors[1:3]) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = NULL, colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "none",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.25, "cm"),
+        legend.text            = element_text(size = 6.5),
+        legend.spacing.y       = unit(0.05, "cm"),
+        legend.margin          = margin(3, 4, 3, 4),
+        legend.title           = element_blank())
+
+print(convergence_genus_plot_loma)
+
+
+convergence_genus_plot_away <- paths_df_genus_euc |>
+  filter(!path  %in% c("LOMA_clim_eff", "LOMA_litt_eff", "LOMA_int_eff")) |> 
+  mutate(path = factor(path, levels = names(path_colors)[4:5])) |>
+  ggplot(aes(x = path, y = F_s1_R0, fill = path)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_point(aes(colour = path),
+             position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.7),
+             size = 2, alpha = 0.8) +
+  stat_summary(aes(fill = path), fun = mean, geom = "col",
+               width = 0.7, alpha = 0.6, show.legend = FALSE) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5) +
+  scale_x_discrete(labels = c("Sa climate", "Sa litter")) +
+  scale_color_manual(values = path_colors[4:5],
+                     labels = c("Climate", "Litter")) +
+  scale_fill_manual(values = path_colors[4:5]) +
+  ylim(-0.25, 0.7) +
+  labs(x = NULL, y = NULL, colour = NULL) +
+  guides(fill = "none",
+         color = guide_legend(override.aes = list(alpha = 0.65, size = 2, linetype = 2))) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        legend.position        = "none",
+        legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 1),
+        legend.background      = element_rect(fill = alpha("white", 0.5), colour = alpha("grey80", 0.5)),
+        legend.key.size        = unit(0.25, "cm"),
+        legend.text            = element_text(size = 6.5),
+        legend.spacing.y       = unit(0.05, "cm"),
+        legend.margin          = margin(3, 4, 3, 4),
+        legend.title           = element_blank())
+
+print(convergence_genus_plot_away)
+
+
+```
+
+
+```{r convergence-genus-with-steps}
+p_dat_LOMA_genus <- paths_df_genus_euc |>
+  filter(!path %in% c("away_clim_eff", "away_litt_eff")) |>
+  mutate(path = factor(str_remove(path, "LOMA_"),
+                       levels = c("clim_eff", "litt_eff", "int_eff"),
+                       labels = c("Climate", "Litter", "Interaction"))) |>
+  select(pair, path, delta1_R0, delta2_R0, total_delta_R0, eta1_R0, eta2_R0) |>
+  pivot_longer(cols = c(delta1_R0, delta2_R0, total_delta_R0, eta1_R0, eta2_R0),
+               names_to = "metric", values_to = "value") |>
+  mutate(metric = factor(metric,
+                         levels = c("delta1_R0", "delta2_R0", "total_delta_R0", "eta1_R0", "eta2_R0"),
+                         labels = c("S0→S1", "S1→R", "S0→R", "Eff.S0→S1", "Eff.S1→R")))
+
+ggplot(p_dat_LOMA_genus, aes(x = path, y = value, fill = metric)) +
+  geom_hline(yintercept = 0, linewidth = 0.3) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65) +
+  facet_nested_wrap(~ pair + path, scales = "free_x", ncol = 12) +
+  labs(y = "Convergence toward R0 (Δ Euclidean)") +
+  scale_fill_manual(values = c("#8888ff", "#88cc88", "#222222", "#009ACD", "#2E8B57")) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank())
+
+ggsave(file.path(RESULTS_DIR, "plots", "ConvergenceR0_with_steps_plot_genus.png"),
+       width = 216, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+```{r mean-pairwise-within-steps-genus}
+D_full_genus <- as.matrix(mg_genus_distmat)[ids_all, ids_all, drop = FALSE]
+
+step_long_genus <- paths_df_genus |>
+  dplyr::select(pair, path, S0, S1, R) |>
+  distinct() |>
+  pivot_longer(cols = c(S0, S1, R), names_to = "step", values_to = "label") |>
+  mutate(step_index = dplyr::recode(step, S0 = 0L, S1 = 1L, R = 2L)) |>
+  arrange(pair, path, step_index) |>
+  mutate(sample_ids = pmap(list(pair, label), ~ get_ids(lookup, ..1, ..2))) |>
+  unnest_longer(sample_ids, values_to = "sample_id") |>
+  filter(!is.na(sample_id))
+
+D_mat_genus <- D_full_genus
+
+mpd_step_genus <- step_long_genus |>
+  group_by(pair, path, step_index) |>
+  summarise(n   = n_distinct(sample_id),
+            mpd = mean_within(D_mat_genus, sample_id),
+            .groups = "drop")
+
+ggplot(mpd_step_genus |> filter(step_index != 2),
+       aes(step_index, mpd, group = interaction(pair, path), colour = path)) +
+  geom_line(alpha = 0.5) +
+  geom_point() +
+  scale_x_continuous(breaks = 0:1, labels = c("S0", "S1")) +
+  scale_color_manual(values = path_colors) +
+  labs(x = "Step", y = "Mean pairwise Bray–Curtis (within step)") +
+  facet_wrap(~ pair, ncol = 4) +
+  theme_minimal()
+
+ggsave(file.path(RESULTS_DIR, "plots", "MeanPairwiseDistance_within_steps_genus.png"),
+       width = 192, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+## Convergence summary — F_s1_R0 across experiments
+
+```{r convergence-F-summary}
+clean_paths <- function(df) {
+  df |>
+    mutate(path = recode(path,
+      LOMA_clim_eff = "Climate (LOMA)",
+      LOMA_litt_eff = "Litter (LOMA)",
+      LOMA_int_eff  = "Interaction (LOMA)",
+      away_clim_eff = "Climate (away)",
+      away_litt_eff = "Litter (away)"
+    ))
+}
+
+conv_both <- bind_rows(
+  paths_df_euc       |> clean_paths() |> mutate(community = "Curtobacterium"),
+  paths_df_genus_euc |> clean_paths() |> mutate(community = "Bacterial community")
+)
+
+# Summary 1: per path, mean F_s1_R0 across the 8 pairs
+conv_by_path <- conv_both |>
+  group_by(community, path) |>
+  summarise(
+    mean_F = mean(F_s1_R0),
+    SD     = sd(F_s1_R0),
+    SE     = SD / sqrt(n()),
+    min    = min(F_s1_R0),
+    max    = max(F_s1_R0),
+    .groups = "drop"
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 3)))
+
+print(conv_by_path)
+
+# Summary 2: per pair, mean F_s1_R0 across all paths
+conv_by_pair <- conv_both |>
+  group_by(community, pair) |>
+  summarise(
+    mean_F = mean(F_s1_R0),
+    SD     = sd(F_s1_R0),
+    SE     = SD / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 3))) |>
+  pivot_wider(names_from  = community,
+              values_from = c(mean_F, SD, SE),
+              names_glue  = "{community}_{.value}") |>
+  arrange(pair)
+
+print(conv_by_pair)
+```
+
+```{r convergence-F-path-plot, fig.width=8, fig.height=5}
+conv_by_path |>
+  mutate(path = fct_reorder(path, mean_F)) |>
+  ggplot(aes(x = mean_F, y = path, color = community)) +
+  geom_vline(xintercept = 0, linewidth = 0.3, linetype = "dashed") +
+  geom_pointrange(aes(xmin = mean_F - SE, xmax = mean_F + SE),
+                  position = position_dodge(width = 0.5),
+                  size = 0.5, linewidth = 0.7) +
+  scale_color_manual(values = c("Curtobacterium"      = "#A9745B",
+                                "Bacterial community" = "#4B7A9E"),
+                     name = NULL) +
+  labs(x = "Mean F_s1_R0 ± SE", y = NULL) +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 10))
+
+ggsave(file.path(RESULTS_DIR, "plots", "convergence_F_by_path_communities.png"),
+       width = 140, height = 120, units = "mm", dpi = 300, bg = "white")
+```
+
+## Randomization tests on F_s1_R0
+
+```{r convergence-randomization-tests}
+set.seed(7341)
+
+# Q1: Exact sign permutation test — is mean F_s1_R0 different from 0 per path?
+# Under H0, signs of the 8 pair values are arbitrary; all 2^8 = 256 combinations
+# are enumerated exactly. p-value = fraction of permuted |means| >= |observed mean|.
+sign_perm_test <- function(x) {
+  obs_mean   <- mean(x)
+  signs      <- expand.grid(rep(list(c(-1, 1)), length(x)))
+  perm_means <- apply(signs, 1, function(s) mean(x * s))
+  p_value    <- mean(abs(perm_means) >= abs(obs_mean))
+  tibble(obs_mean = obs_mean, p_value = p_value, n_perms = nrow(signs))
+}
+
+q1_results <- conv_both |>
+  group_by(community, path) |>
+  summarise(sign_perm_test(F_s1_R0), .groups = "drop") |>
+  group_by(community) |>
+  mutate(p_adj_fdr = p.adjust(p_value, method = "fdr")) |>
+  ungroup() |>
+  mutate(across(where(is.numeric), \(x) round(x, 4))) |>
+  arrange(community, p_adj_fdr)
+
+cat("--- Q1: Mean F_s1_R0 different from 0? ---\n")
+print(q1_results)
+
+# Q2: Within-pair permutation F-test — omnibus path differences
+# Two-way ANOVA (F_s1_R0 ~ path + pair) partitions out pair-level variance.
+# Path labels are permuted within each pair independently, preserving the
+# repeated-measures structure. p-value = fraction of permuted F >= observed F.
+perm_F_within_pairs <- function(df, n_perm = 9999) {
+  obs_F <- summary(aov(F_s1_R0 ~ path + pair, data = df))[[1]]["path", "F value"]
+
+  perm_Fs <- replicate(n_perm, {
+    df_perm <- df |>
+      group_by(pair) |>
+      mutate(path = sample(path)) |>
+      ungroup()
+    summary(aov(F_s1_R0 ~ path + pair, data = df_perm))[[1]]["path", "F value"]
+  })
+
+  p_value <- mean(c(perm_Fs, obs_F) >= obs_F)
+  tibble(obs_F = round(obs_F, 4), p_value = p_value, n_perm = n_perm + 1)
+}
+
+q2_results <- conv_both |>
+  group_by(community) |>
+  group_modify(~ perm_F_within_pairs(.x)) |>
+  ungroup()
+
+cat("\n--- Q2: Omnibus path differences (within-pair permutation F-test) ---\n")
+print(q2_results)
+```
+
+```{r convergence-bootstrap-test}
+# Bootstrap mean test — alternative to sign permutation that does not assume
+# symmetry of the null distribution around 0.
+# Logic: shift data to H0 (subtract observed mean), resample with replacement,
+# ask how often the bootstrap |mean| >= |observed mean|. No symmetry assumption.
+set.seed(7341)
+
+bootstrap_mean_test <- function(x, n_boot = 9999) {
+  obs_mean   <- mean(x)
+  x_shifted  <- x - obs_mean          # centre at 0 to impose H0
+  boot_means <- replicate(n_boot, mean(sample(x_shifted, replace = TRUE)))
+  p_value    <- mean(abs(c(boot_means, obs_mean)) >= abs(obs_mean))
+  tibble(obs_mean = obs_mean, p_value = p_value, n_boot = n_boot + 1)
+}
+
+q1_bootstrap <- conv_both |>
+  group_by(community, path) |>
+  summarise(bootstrap_mean_test(F_s1_R0), .groups = "drop") |>
+  group_by(community) |>
+  mutate(p_adj_fdr = p.adjust(p_value, method = "fdr")) |>
+  ungroup() |>
+  mutate(across(where(is.numeric), \(x) round(x, 4))) |>
+  arrange(community, p_adj_fdr)
+
+cat("--- Bootstrap test: Mean F_s1_R0 different from 0? ---\n")
+print(q1_bootstrap)
+
+# Side-by-side comparison with sign permutation results
+cat("\n--- Comparison: sign permutation vs bootstrap (FDR-adjusted p-values) ---\n")
+q1_results |>
+  select(community, path, sign_p_adj = p_adj_fdr) |>
+  left_join(q1_bootstrap |> select(community, path, boot_p_adj = p_adj_fdr),
+            by = c("community", "path")) |>
+  arrange(community, sign_p_adj) |>
+  print()
+```
+
+```{r export-convergence-tables}
+
+conv_by_pair_clean <- conv_by_pair |>
+  rename(
+    Curto_mean_F = `Curtobacterium_mean_F`,
+    Curto_SD     = `Curtobacterium_SD`,
+    Curto_SE     = `Curtobacterium_SE`,
+    Bact_mean_F  = `Bacterial community_mean_F`,
+    Bact_SD      = `Bacterial community_SD`,
+    Bact_SE      = `Bacterial community_SE`
+  )
+
+dir.create(file.path(RESULTS_DIR, "tables"), showWarnings = FALSE)
+
+write_xlsx(
+  list(
+    "F_by_path"    = conv_by_path,
+    "F_by_pair"    = conv_by_pair_clean,
+    "Q1_bootstrap" = q1_bootstrap,
+    "Q2_omnibus"   = q2_results
+  ),
+  path = file.path(RESULTS_DIR, "tables", "convergence_summaries.xlsx")
+)
+```
+
+---
+
+## Relative abundance trajectories — top subclades
+
+```{r subclades-ra-trajectories}
+subclades_df_bp <- tax_glom(rt_curto_rar, taxrank = "subclade") |>
+  transform_sample_counts(function(x) x / sum(x)) |>
+  psmelt() |>
+  mutate(subclade = factor(subclade, levels = subclds)) |>
+  filter(Bag_type == "Closed", i_code != "none") |>
+  add_pair_label() |>
+  add_irl_label()
+
+subclades_RA_ext_df    <- expand_loma_rows(subclades_df_bp, others)
+
+subclades_RA_ext_df_avg <- subclades_RA_ext_df |>
+  group_by(pair, i_r_l, subclade) |>
+  summarise(meanRA = mean(Abundance),
+            sdRA   = sd(Abundance),
+            seRA   = sd(Abundance) / sqrt(n()),
+            .groups = "drop") |>
+  inner_join(plot_paths_RA, by = "i_r_l") |>
+  filter(pair != "LOMA vs LOMA") |>
+  mutate(path = factor(path, levels = c("Climate", "Litter", "Interaction")))
+
+# Top subclades — LOMA paths
+subclades_RA_ext_df_avg |>
+  filter(subclade %in% c("IC", "IIG", "IIIA", "IVB"), source == "LOMA") |>
+  ggplot(aes(step, meanRA, group = interaction(pair, path, subclade), colour = subclade)) +
+  geom_line(alpha = 0.5) +
+  geom_point(size = 0.75) +
+  geom_errorbar(aes(ymin = meanRA - seRA, ymax = meanRA + seRA), width = 0.06, alpha = 0.5) +
+  scale_color_manual(values = subclade_colors_bp) +
+  scale_x_continuous(breaks = 0:2, labels = c("Loma", "Intermediate", "Away")) +
+  labs(x = "Step", y = "Mean Relative Abundance") +
+  facet_grid(path ~ pair,
+             labeller = labeller(
+               path = c(Climate     = "Climate",
+                        Litter      = "Litter",
+                        Interaction = "Climate + Litter"),
+               pair = setNames(
+                 paste0("LOMA vs\n", others, " (away)"),
+                 paste0(others, " vs LOMA")
+               )
+             )) +
+  theme_minimal() +
+  theme(text           = element_text(size = 8),
+        axis.text.x    = element_text(angle = 45, hjust = 1),
+        strip.text.x   = element_text(size = 6.5),
+        strip.text.y   = element_text(size = 7))
+
+ggsave(file.path(RESULTS_DIR, "plots", "TopSubclades_RA_by_pair_path.png"),
+       width = 200, height = 100, units = "mm", dpi = 300, bg = "white")
+
+# Top subclades — MAT correlation
+subclades_RA_ext_df_avg |>
+  filter(subclade %in% c("IC", "IIG", "IIIA", "IVB"), path == "Climate",
+         step != 2, source == "LOMA") |>
+  distinct(pair, i_r_l, subclade, .keep_all = TRUE) |>
+  left_join(pca_clim_df2 |> select(pair, bio1), by = "pair") |>
+  ggplot(aes(bio1, meanRA, group = subclade, colour = subclade, fill = subclade)) +
+  geom_smooth(method = "lm", se = TRUE) +
+  geom_point(size = 0.75) +
+  geom_errorbar(aes(ymin = meanRA - seRA, ymax = meanRA + seRA), width = 0.06, alpha = 0.5) +
+  scale_color_manual(values = subclade_colors_bp) +
+  scale_fill_manual(values  = subclade_colors_bp) +
+  labs(x = "MAT (bio1)", y = "Mean Rel. Abundance") +
+  facet_grid(~ subclade) +
+  theme_minimal() +
+  theme(text = element_text(size = 8))
+
+ggsave(file.path(RESULTS_DIR, "plots", "TopSubclades_RA_by_MAT_climate_path.png"),
+       width = 120, height = 60, units = "mm", dpi = 300, bg = "white")
+```
+
+---
+
+## Curtobacterium relative abundance trajectories (genus level)
+
+```{r curto-ra-genus}
+genus_df_bp <- transform_sample_counts(rt_g, function(x) x / sum(x)) |>
+  psmelt() |>
+  filter(Bag_type == "Closed", i_code != "none", OTU == "Curtobacterium") |>
+  add_pair_label() |>
+  add_irl_label()
+
+genus_RA_ext_df     <- expand_loma_rows(genus_df_bp, others)
+
+genus_RA_ext_df_avg <- genus_RA_ext_df |>
+  group_by(pair, i_r_l) |>
+  summarise(meanRA = mean(Abundance),
+            sdRA   = sd(Abundance),
+            seRA   = sd(Abundance) / sqrt(n()),
+            .groups = "drop") |>
+  inner_join(plot_paths_RA, by = "i_r_l") |>
+  filter(pair != "LOMA vs LOMA") |>
+  mutate(path = factor(path, levels = c("Climate", "Litter", "Interaction")))
+
+genus_RA_ext_df_avg |>
+  filter(source == "LOMA") |>
+  ggplot(aes(step, meanRA, group = interaction(pair, path))) +
+  geom_line(alpha = 0.5) + geom_point(size = 0.75) +
+  geom_errorbar(aes(ymin = meanRA - seRA, ymax = meanRA + seRA), width = 0.06, alpha = 0.5) +
+  scale_x_continuous(breaks = 0:2, labels = c("LOMA", "Intermediate", "Away")) +
+  labs(x = "Step", y = "Mean Curtobacterium Rel. Abundance") +
+  facet_grid(path ~ pair) +
+  theme_minimal() +
+  theme(text = element_text(size = 8))
+
+ggsave(file.path(RESULTS_DIR, "plots", "CURTO_RA_by_pair_path.png"),
+       width = 200, height = 100, units = "mm", dpi = 300, bg = "white")
+```
+
+## Top 5 genera relative abundance trajectories
+
+```{r top5-genera-ra}
+top5_genera <- c("Pseudomonas_E", "Sphingomonas", "Telluria",
+                 "Curtobacterium", "Mucilaginibacter")
+
+top5_df_bp <- transform_sample_counts(rt_g, function(x) x / sum(x)) |>
+  psmelt() |>
+  filter(Bag_type == "Closed", i_code != "none", OTU %in% top5_genera) |>
+  add_pair_label() |>
+  add_irl_label()
+
+top5_RA_ext_df <- expand_loma_rows(top5_df_bp, others)
+
+top5_RA_ext_df_avg <- top5_RA_ext_df |>
+  group_by(OTU, pair, i_r_l) |>
+  summarise(meanRA = mean(Abundance),
+            sdRA   = sd(Abundance),
+            seRA   = sd(Abundance) / sqrt(n()),
+            .groups = "drop") |>
+  inner_join(plot_paths_RA, by = "i_r_l") |>
+  filter(pair != "LOMA vs LOMA") |>
+  mutate(path = factor(path, levels = c("Climate", "Litter", "Interaction")),
+         OTU  = factor(OTU, levels = top5_genera))
+
+top5_RA_ext_df_avg |>
+  filter(source == "LOMA") |>
+  ggplot(aes(step, meanRA, color = OTU, group = interaction(OTU, pair))) +
+  geom_line(alpha = 0.6) +
+  geom_point(size = 0.75) +
+  geom_errorbar(aes(ymin = meanRA - seRA, ymax = meanRA + seRA),
+                width = 0.06, alpha = 0.5) +
+  scale_colour_manual(values = colors) +
+  scale_x_continuous(breaks = 0:2, labels = c("S0", "S1", "R")) +
+  labs(x = "Step", y = "Mean Rel. Abundance", color = "Genus") +
+  facet_grid(path ~ pair) +
+  theme_minimal() +
+  theme(text = element_text(size = 8))
+
+ggsave(file.path(RESULTS_DIR, "plots", "Top5genera_RA_by_pair_path.png"),
+       width = 280, height = 180, units = "mm", dpi = 300, bg = "white")
+```
+
+## Taxa var plot for the top 10 most abundant genera
+
+```{r taxa-barplot-top10-genera}
+
+
+# --- 1. Compute per-sample relative abundances for ALL genera ---
+all_genera_df_bp <- transform_sample_counts(rt_g, function(x) x / sum(x)) |>
+  psmelt() |>
+  filter(Bag_type == "Closed", i_code != "none") |>
+  add_pair_label() |>
+  add_irl_label()
+
+all_genera_RA_ext_df <- expand_loma_rows(all_genera_df_bp, others)
+
+# --- 2. Identify top 10 genera by overall mean RA ---
+top10_genera <- all_genera_RA_ext_df |>
+  group_by(OTU) |>
+  summarise(meanRA = mean(Abundance), .groups = "drop") |>
+  slice_max(meanRA, n = 10) |>
+  arrange(desc(meanRA)) |>
+  pull(OTU)
+
+cat("Top 10 genera:\n")
+print(top10_genera)
+
+# --- 3. Per-sample: sum non-top10 into "Others" ---
+per_sample_grouped <- all_genera_RA_ext_df |>
+  mutate(genus_group = if_else(OTU %in% top10_genera, OTU, "Others")) |>
+  group_by(Sample, genus_group, pair, i_r_l) |>
+  summarise(Abundance = sum(Abundance), .groups = "drop")
+
+
+taxa_bar_avg <- per_sample_grouped |>
+  group_by(genus_group, pair, i_r_l) |>
+  summarise(meanRA = mean(Abundance), .groups = "drop") |>
+  inner_join(plot_paths_RA, by = "i_r_l", relationship = "many-to-many") |>
+  filter(pair != "LOMA vs LOMA", source == "LOMA") |>
+  mutate(
+    path        = factor(path, levels = c("Climate", "Litter", "Interaction")),
+    genus_group = factor(genus_group, levels = c(top10_genera, "Others")),
+    step_label  = factor(step, levels = 0:2, labels = c("S0", "S1", "R"))
+  )
+
+genus_colors <- c(
+  setNames(RColorBrewer::brewer.pal(10, "Paired"), top10_genera),
+  Others = "gray70"
+)
+
+
+taxa_bar_avg |>
+  mutate(step_label = factor(step, levels = 0:2, labels = c("H0", "I", "A0"))) |>
+  ggplot(aes(x = step_label, y = meanRA, fill = genus_group)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.8) +
+  scale_fill_manual(values = genus_colors, name = "Genus") +
+  facet_grid(path ~ pair) +
+  labs(x = "Step", y = "Mean Relative Abundance") +
+  theme_minimal() +
+  theme(
+    text            = element_text(size = 8),
+    legend.position = "right",
+    strip.text      = element_text(size = 7)
+  )
+
+
+ggsave(file.path(RESULTS_DIR, "plots", "Top10genera_taxabarplot_by_pair_path.png"),
+       width = 280, height = 180, units = "mm", dpi = 300, bg = "white")
+
+```
+
+## Combined: LOMA inoculum centroids by reserve × litter (subclades vs genus)
+
+```{r nmds-cent-RL-combined, fig.width=18, fig.height=8}
+p_convergence_combined <- ggpubr::ggarrange(
+  convergence_genus_plot, convergence_subclades_plot,
+  ncol          = 2 ,
+  labels        = c("A", "B"),
+  common.legend = F
+)
+
+p_convergence_combined
+
+ggsave(p_convergence_combined,
+       file = file.path(RESULTS_DIR, "plots", "convergence_plot_combined.png"),
+       width = 110, height = 110, units = "mm", dpi = 300, bg = "white")
+
+
+
+p_convergence_combined_loma <- ggpubr::ggarrange(
+  convergence_genus_plot_loma, convergence_subclades_plot_loma,
+  ncol          = 2,
+  labels        = c("A", "B"),
+  common.legend = F
+)
+
+p_convergence_combined_loma
+
+ggsave(p_convergence_combined_loma,
+       file = file.path(RESULTS_DIR, "plots", "convergence_plot_combined_loma.png"),
+       width = 80, height = 110, units = "mm", dpi = 300, bg = "white")
+
+
+
+p_convergence_combined_away <- ggpubr::ggarrange(
+  convergence_genus_plot_away, convergence_subclades_plot_away,
+  ncol          = 2,
+  labels        = c("A", "B"),
+  common.legend = F
+)
+
+p_convergence_combined_away
+
+ggsave(p_convergence_combined_away,
+       file = file.path(RESULTS_DIR, "plots", "convergence_plot_combined_away.png"),
+       width = 80, height = 110, units = "mm", dpi = 300, bg = "white")
+
+```
+
+
+```{r combined-figure-for-convergence-by-Pairs}
+p_convergence_pairs_combined <- ggpubr::ggarrange(
+  convergence_by_pair_genus, convergence_by_pair_subclades,
+  nrow          = 2,
+  labels        = c("A", "B"),
+  common.legend = T,
+  legend = "bottom"
+)
+
+p_convergence_pairs_combined
+
+ggsave(p_convergence_pairs_combined,
+       file = file.path(RESULTS_DIR, "plots", "convergence_by_pairs_plot_combined.png"),
+       width = 140, height = 180, units = "mm", dpi = 300, bg = "white")
+```
+
+
+
+## Save outputs
+
+```{r save-rds}
+saveRDS(paths_df,              file.path(RDS_DIR, "paths_df.rds"))
+saveRDS(paths_df_euc,          file.path(RDS_DIR, "paths_df_euc.rds"))
+saveRDS(paths_df_genus,        file.path(RDS_DIR, "paths_df_genus.rds"))
+saveRDS(paths_df_genus_euc,    file.path(RDS_DIR, "paths_df_genus_euc.rds"))
+saveRDS(pair_dists,            file.path(RDS_DIR, "pair_dists.rds"))
+saveRDS(pca_clim_df2,          file.path(RDS_DIR, "pca_clim_df2.rds"))
+saveRDS(bioclim_vars,          file.path(RDS_DIR, "bioclim_vars.rds"))
+saveRDS(lookup,                file.path(RDS_DIR, "lookup.rds"))
+saveRDS(D_full,                file.path(RDS_DIR, "D_full.rds"))
+saveRDS(mpd_step,              file.path(RDS_DIR, "mpd_step.rds"))
+
+# Plot objects for cross-script figure assembly (06_combined_figures.Rmd)
+saveRDS(convergence_genus_plot_loma,     file.path(RDS_DIR, "fig_convergence_genus_loma.rds"))
+saveRDS(convergence_genus_plot_away,     file.path(RDS_DIR, "fig_convergence_genus_away.rds"))
+saveRDS(convergence_subclades_plot_loma, file.path(RDS_DIR, "fig_convergence_subcl_loma.rds"))
+saveRDS(convergence_subclades_plot_away, file.path(RDS_DIR, "fig_convergence_subcl_away.rds"))
+
+message("04_convergence: all objects saved to ", RDS_DIR)
+```
