@@ -659,6 +659,19 @@ ggsave(file.path(RESULTS_DIR, "plots", "i_LOMA_nmds_genus_centroids_by_reserve_l
        width = 120*1.2, height = 120, units = "mm", dpi = 300, bg = "white")
 ```
 
+## Combined plot for LOMA inoculum reserve x litter for Genus and subclades
+
+```{r, fig.width=22, fig.height=10}
+ggarrange(genus_cent_plot_i_LOMA, subclades_cent_plot_i_LOMA,
+          ncol = 2, common.legend = T,
+          legend = "right", labels = "AUTO")
+
+ggsave(file.path(RESULTS_DIR, "plots", "i_LOMA_nmds_Combined_genusANDsubclades_centroids_by_reserve_litter.png"),
+       width = 120*2.1, height = 120, units = "mm", dpi = 300, bg = "white")
+
+```
+
+
 ### Away inocula across reserves (genus)
 
 ```{r nmds-genus-away-inoc, fig.width=22, fig.height=10}
