@@ -1,6 +1,6 @@
 # Data Dictionary
 
-Input files required to run the reciprocal transplant microbiome analysis. These are the raw files read directly by the numbered reports. Everything under `results/rds/` is a regenerable intermediate produced by the pipeline (starting with `01_data_load.Rmd`) and is not listed here.
+Input files required to run the reciprocal transplant experiment analysis. These are the raw files read directly by the numbered reports. Everything under `results/rds/` is a regenerable intermediate produced by the pipeline (starting with `01_data_load.Rmd`) and is not listed here.
 
 ## Where inputs are read
 
@@ -121,4 +121,4 @@ Same schema as `PERMANOVAS_primer.csv`, for the genus-level PERMANOVA. Shape: 48
 ## Related files not read by the pipeline
 
 - **`data/coreDB_Genus_abundance_table.tsv`** — a genus abundance table (coreDB taxonomy, ~3,136 genera) present in `data/` but not referenced by any of the numbered reports. Likely an alternate to the GTDB table.
-- **`results/PERMANOVAS_Primer/PERMANOVA_*.txt` and `PERMANOVAS_primer.xlsx`** — raw PRIMER per-comparison outputs. Only the two `PERMANOVAS_primer*.csv` summaries are consumed by the reports.
+- **`results/PERMANOVAS_Primer/PERMANOVA_*.txt` and `PERMANOVAS_primer.xlsx`** — raw PRIMER per-comparison outputs. Only the two `PERMANOVAS_primer*.csv` summaries are used by the reports.
