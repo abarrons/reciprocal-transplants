@@ -4,7 +4,7 @@
 .Ruserdata
 .Rproj.user/
 *_cache/
-results/rds/
-results/plots/
+results/
 RTs.html
 RTs.Rmd
+.posit/assistant
