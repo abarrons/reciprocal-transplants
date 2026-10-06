@@ -2,6 +2,12 @@
   "permission": {
     "executeCode": {
       "*": "allow"
+    },
+    "bash": {
+      "echo *": "allow",
+      "git ls-files *": "allow",
+      "git check-ignore *": "allow",
+      "git log *": "allow"
     }
   }
 }
